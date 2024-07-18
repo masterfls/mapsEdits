@@ -1,10 +1,11 @@
 import { Request, Response } from "express";
+import { savePolyline } from "../services/mapService";
 
 export const getPolyline = async(req: Request, res: Response) =>{
     try {
         const linea = req.body;
-        console.log('linea guardada con exito')
-        res.status(201).json({message: 'linea guardada con exito'});
+        const savelinea = await savePolyline(linea);
+        res.status(201).json(savelinea);
         // res.status(200).json("aqui se mostrara datos geoespaciales de las polilineas");
         
     } catch (error) {

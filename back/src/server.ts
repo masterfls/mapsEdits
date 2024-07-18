@@ -5,7 +5,7 @@
 // 2) ir creando las 3 carpetas principales que se encargaran de las peticiones y respuestas
 
 
-import  express  from "express";    //me traigo la libreria express que me servira para crear mi servidor
+import express  from "express";    //me traigo la libreria express que me servira para crear mi servidor
 import cors from "cors";
 import morgan from "morgan";
 import router from "./router/index"

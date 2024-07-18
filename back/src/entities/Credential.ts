@@ -1,15 +1,15 @@
-// import { Column, Entity, PrimaryGeneratedColumn } from "typeorm"
-// @Entity({               
-//     name: "credentials"       
-// }) 
-// export class Credential{
+import { Column, Entity, PrimaryGeneratedColumn } from "typeorm"
+@Entity({               
+    name: "credentials"       
+}) 
+export class Credential{
 
-//     @PrimaryGeneratedColumn()
-//     id: number
+    @PrimaryGeneratedColumn()
+    id: number
 
-//     @Column()
-//     username: string
+    @Column()
+    username: string
 
-//     @Column()
-//     password: string
-// }
+    @Column()
+    password: string
+}

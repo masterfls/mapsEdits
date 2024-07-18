@@ -50,6 +50,7 @@ async function guardarLinea(linea) {
     try {
         // Enviar la línea al backend usando Axios y esperar la respuesta
         const response = await axios.post('http://127.0.0.1:3002/api/lineas', linea);
+        // console.log(response.data)
         console.log('Línea guardada en el backend:', response.data);
     } catch (error) {
         console.error('Error al guardar la línea:', error);
