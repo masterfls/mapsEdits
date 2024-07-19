@@ -1,8 +1,11 @@
 import { Request, Response } from "express";
-import { savePolyline } from "../services/mapService";
+import { polylineGet, savePolyline } from "../services/mapService";
+import { Maps } from "../entities/Maps";
+import IMaps from "../DTO/mapsdto";
 
-export const getPolyline = async(req: Request, res: Response) =>{
+export const getPolyline = async(req: Request, res: Response) =>{ 
     try {
+        // const { coordenadas.lat, coordenadas.lng, estilos.color, estilos.grosor }: IMaps = req.body
         const linea = req.body;
         const savelinea = await savePolyline(linea);
         res.status(201).json(savelinea);
@@ -19,4 +22,13 @@ export const getPolylineId = async (req: Request, res: Response) => {
         } catch (error) {
             res.status(400).json({error: "Error al obtener los usuarios"})
         }
+}
+
+export const polylines = async(req: Request, res: Response) =>{
+    try {
+        const lineas: Maps[] = await polylineGet()
+        res.status(200).json(lineas);
+    } catch (error) {
+        res.status(400).json({error: "Error al obtener las lineas"})
+    }
 }

@@ -8,18 +8,23 @@ export class Maps{
     @PrimaryGeneratedColumn()
     id: number
 
-    @Column()
-    lat: number
+    @Column({type: 'jsonb', nullable: true})
+    coordenadas: {lat: number, lng: number}[]; //array de objetos con lat y lng 
 
-    @Column()
-    lng: number
-
-    @Column()
-    color: string
-
-    @Column()
-    grosor: number
-
+    @Column({type: 'jsonb', nullable: true})
+    estilos: {color: string, grosor: number}[]
+    
     @ManyToOne (() => User, (user) => user.maps)
     user: User;
 }
+
+    // @Column()
+    // lat: number[]
+    // @Column()
+    // lng: number[]
+    // @Column()
+    // color: string
+    // @Column()
+    // grosor: number
+    // @Column()
+    // userId: number
