@@ -17,14 +17,3 @@ export class Maps{
     @ManyToOne (() => User, (user) => user.maps)
     user: User;
 }
-
-    // @Column()
-    // lat: number[]
-    // @Column()
-    // lng: number[]
-    // @Column()
-    // color: string
-    // @Column()
-    // grosor: number
-    // @Column()
-    // userId: number

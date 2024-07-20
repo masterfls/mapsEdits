@@ -5,7 +5,6 @@ import IMaps from "../DTO/mapsdto";
 
 export const getPolyline = async(req: Request, res: Response) =>{ 
     try {
-        // const { coordenadas.lat, coordenadas.lng, estilos.color, estilos.grosor }: IMaps = req.body
         const linea = req.body;
         const savelinea = await savePolyline(linea);
         res.status(201).json(savelinea);

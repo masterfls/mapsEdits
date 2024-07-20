@@ -30,9 +30,9 @@ export const register = async(req: Request, res: Response) =>{
         const { name, email, birthdate, nDni, username, password }: IUserdto = req.body
         const newUser: User | null = await createUser({ name, email, birthdate, nDni, username, password  }) 
         if (newUser == null){
-            res.status(200).json("User already exists")
+            res.status(200).json(true)
         }else{
-            res.status(200).json(newUser);
+            res.status(200).json(false);
         }
         
     } catch (error: any) {
@@ -46,7 +46,7 @@ export const loginUsers = async(req: Request, res: Response) =>{
         const { username, password }: ICredential = req.body
         const userExist = await searchCredential({ username, password })
         if (userExist){
-            return res.status(200).json({message: "User Logged"})
+            return res.status(200).json(true)
         }
         throw new Error("Credenciales incorrectas, usuario no logueado")
 

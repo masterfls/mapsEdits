@@ -26,7 +26,9 @@ document.addEventListener('DOMContentLoaded', () => {
     async function userSave(user) {
       try {
         const response = await axios.post('http://127.0.0.1:3002/users/register', user);
-        console.log('User:', response.data);
+        if(!response.data){
+          window.location.href = "login.html"
+        }
       } catch (error) {
         console.error('Error registering user:', error);
       }
