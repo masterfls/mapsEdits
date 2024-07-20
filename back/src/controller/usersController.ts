@@ -3,6 +3,7 @@ import { User } from "../entities/User";
 import { createUser, returnUser, UserService, loginUser } from "../services/UserService";
 import IUserdto from "../DTO/userdto";
 import ICredential from "../DTO/credentialdto";
+import { searchCredential } from "../services/CredentialService";
 
 export const getUsers = async(req: Request, res: Response) =>{
     try {
@@ -27,8 +28,12 @@ export const getUsersId = async(req: Request, res: Response) =>{
 export const register = async(req: Request, res: Response) =>{
     try {
         const { name, email, birthdate, nDni, username, password }: IUserdto = req.body
-        const newUser: User = await createUser({ name, email, birthdate, nDni, username, password  }) 
-        res.status(200).json(newUser);
+        const newUser: User | null = await createUser({ name, email, birthdate, nDni, username, password  }) 
+        if (newUser == null){
+            res.status(200).json("User already exists")
+        }else{
+            res.status(200).json(newUser);
+        }
         
     } catch (error: any) {
         res.status(400).json({error: error.message})
@@ -39,7 +44,7 @@ export const register = async(req: Request, res: Response) =>{
 export const loginUsers = async(req: Request, res: Response) =>{
     try {
         const { username, password }: ICredential = req.body
-        const userExist = await loginUser({ username, password })
+        const userExist = await searchCredential({ username, password })
         if (userExist){
             return res.status(200).json({message: "User Logged"})
         }

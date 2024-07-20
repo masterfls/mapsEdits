@@ -3,9 +3,10 @@ import { Credential } from "../entities/Credential";
 import ICredential from "../DTO/credentialdto";
 
 export const createCredential = async (credentialData: ICredential): Promise<Credential> => {
-    const newCredential = await CredentialModel.create(credentialData); //accedo a la entidad y con el metodo create creo una nueva credencial con los datos recibidos por parametros
-    await CredentialModel.save(newCredential)   //guardo esas credenciales con el metodo save en la base de datos
-    return newCredential    //retorno el par de credenciales creada
+        const newCredential = await CredentialModel.create(credentialData); //accedo a la entidad y con el metodo create creo una nueva credencial con los datos recibidos por parametros
+        await CredentialModel.save(newCredential)   //guardo esas credenciales con el metodo save en la base de datos
+        return newCredential    //retorno el par de credenciales creada
+
 }
 
 

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <title>REGISTER form</title>
+  <link rel="stylesheet" href="../styles/formregister.css">
+</head>
+<body>
+  <div class="login-container">
+    <form class="login-form" id="registerForm">
+      <h2>REGISTER</h2>
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input id = "name" type="text" id="name" name="name" required>
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input id = "email" type="email" id="email" name="email" required>
+      </div>
+      <div class="form-group">
+        <label for="birthdate">Birthdate</label>
+        <input id = "birthdate" type="date" id="birthdate" name="birthdate" required>
+      </div>
+      <div class="form-group">
+        <label for="nDni">National ID</label>
+        <input id = "nDni" type="text" id="nDni" name="nDni" required>
+      </div>
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input id = "username" type="text" id="username" name="username" required>
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input id = "password" type="password" id="password" name="password" required>
+      </div>
+      <button id = "submit" type="submit"></button>
+      <a href = "./login.html">Do you not already have an account?</a>
+    </form>
+  </div>
+  <script src="../src/register.js"></script>
+</body>
+</html>
