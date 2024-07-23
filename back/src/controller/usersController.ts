@@ -4,6 +4,7 @@ import { createUser, returnUser, UserService, loginUser } from "../services/User
 import IUserdto from "../DTO/userdto";
 import ICredential from "../DTO/credentialdto";
 import { searchCredential } from "../services/CredentialService";
+import { token } from "morgan";
 
 export const getUsers = async(req: Request, res: Response) =>{
     try {
@@ -46,11 +47,11 @@ export const loginUsers = async(req: Request, res: Response) =>{
         const { username, password }: ICredential = req.body
         const userExist = await searchCredential({ username, password })
         if (userExist){
-            return res.status(200).json(true)
+            return res.status(200).json({auth: true, token: token})
         }
-        throw new Error("Credenciales incorrectas, usuario no logueado")
+        throw new Error("invalid credentials or user no logedd")
 
     } catch (error: any) {
-        return res.status(400).json({error: error.message})
+        return res.status(400).json("invalid credentials")
     }
 }
