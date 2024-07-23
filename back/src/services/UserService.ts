@@ -53,6 +53,8 @@ export const createUser = async (userData: IUserdto) => {
 }
 
 export const loginUser = async (Credentials: ICredential) => {
-    const userExist: number = await searchCredential(Credentials)
-    if(userExist) return true
+    const userExist = await searchCredential(Credentials)
+    if(userExist) {
+        
+    }
 }
