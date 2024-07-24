@@ -45,13 +45,13 @@ export const register = async(req: Request, res: Response) =>{
 export const loginUsers = async(req: Request, res: Response) =>{
     try {
         const { username, password }: ICredential = req.body
-        const userExist = await searchCredential({ username, password })
-        if (userExist){
-            return res.status(200).json({auth: true, token: token})
+        const token = await searchCredential({ username, password })
+        if (token){
+            return res.json({ token })
         }
         throw new Error("invalid credentials or user no logedd")
 
     } catch (error: any) {
-        return res.status(400).json("invalid credentials")
+        return res.status(400).json({message: "invalid credentials"})
     }
 }

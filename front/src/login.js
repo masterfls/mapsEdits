@@ -18,8 +18,8 @@ document.addEventListener('DOMContentLoaded', () => {
     async function userSave(userlogin) {
       try {
         const response = await axios.post('http://127.0.0.1:3002/users/login', userlogin);
-        console.log('User:', response.data);
-        if(response.data){
+        if(response.data.token){
+          localStorage.setItem('token', response.data.token)
           window.location.href="index.html"
         }
       } catch (error) {

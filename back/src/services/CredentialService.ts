@@ -17,30 +17,24 @@ export const createCredential = async (credentialData: ICredential): Promise<Cre
     }); 
     await CredentialModel.save(newCredential)   //guardo esas credenciales con el metodo save en la base de datos
     return newCredential    //retorno el par de credenciales creada
+    
 
 }
 
 
 export const searchCredential = async (searchData: ICredential) => {
     const userId: Credential | null = await CredentialModel.findOneBy({username: searchData.username}) //uso el metodo finOneBy para obtener el registro en la tabala de la base de datos que coincida en el username brindado (en caso de existir)
-    
-    console.log(userId)
-
     if (userId){
         const passwordIsValid = bcrypt.compareSync(searchData.password, userId.password)
-        console.log(userId.password)
-        console.log(passwordIsValid)
-        console.log(searchData.password)
         if (passwordIsValid){
             const token = jwt.sign({ id: userId.id }, 'your_secret_key', { expiresIn: '1h' });        //generacion del token
-            console.log(token)
-            return userId
+            return token
         }else{
             return false
         }
 
     }else{                                      //si no existe significa que las credenciales no existe por lo que el usuario no existe o las ingreso mal
-        throw Error("Credenciales Not Found")
+        throw new Error("Credenciales Not Found")
     }
 }
 

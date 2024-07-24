@@ -19,10 +19,8 @@ const validateUser = async(email: string, username: string): Promise<boolean> =>
     const dataemail = await UserModel.findOneBy({email: email})
     const datausername = await CredentialModel.findOneBy({username: username})
     if (dataemail || datausername) {
-        console.log(dataemail)
         return true
     }else{
-        console.log(dataemail)
         return false
     }
 }
@@ -36,8 +34,6 @@ export const createUser = async (userData: IUserdto) => {
         console.log(validation)
         return null
      }else{
-        console.log(validation)
-
         const User = await UserModel.create(userData)   //creo el registro en la DB
         const newCredential = await createCredential({
             username: userData.username,
@@ -55,6 +51,6 @@ export const createUser = async (userData: IUserdto) => {
 export const loginUser = async (Credentials: ICredential) => {
     const userExist = await searchCredential(Credentials)
     if(userExist) {
-        
+        console.log("token generado: ", userExist)
     }
 }
