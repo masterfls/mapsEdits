@@ -33,9 +33,9 @@ function initMap() {
                     color: nuevaLinea.strokeColor,
                     grosor: nuevaLinea.strokeWeight
                 },
-                id: 0
+                // id: 0
             };
-
+            console.log("linea dibujada: ", linea)
             // Guardar la línea llamando a la función guardarLinea
             guardarLinea(linea);
         }
@@ -62,10 +62,9 @@ function initMap() {
     async function guardarLinea(linea) {
         try {
             const id = await fetchProtectedData();
-            linea.id = id
-            console.log("funcion guardar linea: ",linea)
+            console.log("linea: ", linea)
+            // linea.id = id
             const response = await axios.post('http://127.0.0.1:3002/api/lineas', linea) ;
-            console.log('Línea guardada en el backend:', response.data);
         } catch (error) {
             console.error('Error al guardar la línea:', error);
         }
@@ -75,28 +74,28 @@ function initMap() {
     async function drawSavedPolylines() {
         try {
             const id = await fetchProtectedData();
-            const response = await axios.get('http://localhost:3002/api/lineas/get', {params:{id: id}});
-
-            console.log("response.data que devuelve la funcion de dibujar linea", response.data)
+            const response = await axios.get('http://localhost:3002/api/lineas/get', { params: { id: id } });
             const savedPolylines = response.data;
-
-            // Iterar sobre las polilíneas guardadas y dibujarlas en el mapa
+            console.log("response.data: ", response.data)
             savedPolylines.forEach((line) => {
+                const coordenadas = line.coordenadas;
+    
+                // Dibuja la línea en el mapa
                 new google.maps.Polyline({
-                    path: line.coordenadas,
-                    strokeColor: line.color,
+                    path: coordenadas,
+                    strokeColor: line.estilos?.color || '#FF0000', // Default color
                     strokeOpacity: 1.0,
-                    strokeWeight: line.grosor,
-                    editable: false,                // No editable si solo se están mostrando
+                    strokeWeight: line.estilos?.grosor || 2, // Default weight
+                    editable: false, // No editable si solo se están mostrando
                     map: map,
                 });
             });
-
+    
         } catch (error) {
             console.error('Error al obtener las polilíneas guardadas:', error);
         }
     }
-
+    
     // Llamar a la función para dibujar las polilíneas cuando se cargue el mapa
     drawSavedPolylines();
 }
