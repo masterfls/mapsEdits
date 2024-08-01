@@ -10,9 +10,12 @@ export const UserService = async (): Promise<User[]> => {
     return user                 
 }
 
-export const returnUser = async(id: number): Promise<User | null> => {
+export const returnUser = async(id: number): Promise<object | null> => {
     const user = await UserModel.findOneBy({id})    //me traigo de la tabla User de la DB al primer registro que coincida con el id recibido por parametros
-    return user;
+    const credentials: Credential | null = await CredentialModel.findOneBy({id: id})
+    const username = credentials?.username
+
+    return {user, username}
 }
 
 const validateUser = async(email: string, username: string): Promise<boolean> => {
@@ -31,7 +34,6 @@ export const createUser = async (userData: IUserdto) => {
     const validation: boolean = await validateUser(email, username)
     
      if (validation){                                           //valido el mail del usuario que se esta registrando
-        console.log(validation)
         return null
      }else{
         const User = await UserModel.create(userData)   //creo el registro en la DB

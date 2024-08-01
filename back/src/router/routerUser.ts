@@ -4,7 +4,7 @@ import authMiddleware from "../middleware/tokenvalidate";
 const router: Router = Router()
 
 router.get("/users", getUsers);
-router.get("/users/:id", getUsersId);
+router.get("/users/id", getUsersId);
 router.post("/users/register", register)
 router.post("/users/login", loginUsers)
 router.get('/users/validate/token', authMiddleware, (req: any,res) => {

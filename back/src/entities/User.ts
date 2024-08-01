@@ -22,6 +22,13 @@ export class User {
     @Column()
     nDni: string
 
+    @Column({
+        type: "enum",
+        enum: ["disabled", "active"],
+        default: "disabled"
+    })
+    status: string
+
     @OneToOne(() => Credential)                //indica que es una relacion de 1 a 1 con la tabla de esa entidad
     @JoinColumn({name: "credentialId"})        //JoinColumn define que lado de la relacion contiene la columna de union con una clave externa
                                                //esta columna almacenara la clave foranea

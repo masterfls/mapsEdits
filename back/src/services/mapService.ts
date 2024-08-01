@@ -4,39 +4,43 @@ import IMaps from "../DTO/mapsdto";
 import { MapsModel, UserModel } from "../config/data-source";
 import { User } from "../entities/User";
 
+export const savePolyline = async (data: IMaps): Promise<Maps> => {
+    // Busca al usuario por su ID
+    const user: User | null = await UserModel.findOneBy({id: data.userId}) 
+    if (!user) {
+        throw new Error("Usuario Inexistente");
+    }
+    console.log(user)
+    // Crea una nueva línea
+    const newPolyline = MapsModel.create({
+        coordenadas: data.coordenadas,
+        estilos: data.estilos,
+        user: user,
+    });
 
-export const savePolyline = async (data: IMaps, id:number): Promise<Maps> => {
-    console.log(data)
-    data.userId = id;
-    const user: User | null = await UserModel.findOneBy({id: data.userId})      //busco al usuario por su id
-    console.log("usuarios: ", user)
-    if (!user) {                                                                //verifico si el usuario existe
-        throw Error("Usuario Inexistente")                       
-    }
-    const existingpolyline: Maps | null = await MapsModel.findOneBy({user: {id: data.userId}})
-    console.log("existingpolyline: ", existingpolyline)
-    let newPolyline: Maps;
-    if(existingpolyline){
-        existingpolyline.coordenadas.push(...data.coordenadas);
-        newPolyline = existingpolyline;
-    }else{
-        newPolyline = MapsModel.create({
-            ...data,
-            user: user,
-            
-        });
-    }
-     
-    newPolyline.user = user;                                                    //asigno en polyline.user el usuario encontrado
-    await MapsModel.save(newPolyline)
-    console.log("nueva polilineas: ", newPolyline.coordenadas)
+    // Guarda la nueva línea en la base de datos
+    await MapsModel.save(newPolyline);
+    
     return newPolyline;
-}
-export const polylineGet = async (userId: number): Promise<Maps[]> => {
+};
+
+
+
+export const polylineGet = async (id: number): Promise<Maps[]> => {
     const maps = await MapsModel.find({
-        where: {user: {id: userId }}
+        where: {user: {id: id }}
     });    //accedo a la tabla Mpas de la DB y me traigo todo lo que hay con el metodo find
+    console.log("lineas: ",maps)
     return maps              
+}
+
+export const deleteLinea = async (id: number) => {
+    const line = await MapsModel.find({
+        where: {id: id}
+    });    //accedo a la tabla Mpas de la DB y me traigo todo lo que hay con el metodo find
+    const del = await MapsModel.delete(id)
+    console.log("linea que deberia borrar: ", line)     
+    return       
 }
 
 

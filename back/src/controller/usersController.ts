@@ -4,7 +4,6 @@ import { createUser, returnUser, UserService, loginUser } from "../services/User
 import IUserdto from "../DTO/userdto";
 import ICredential from "../DTO/credentialdto";
 import { searchCredential } from "../services/CredentialService";
-import { token } from "morgan";
 
 export const getUsers = async(req: Request, res: Response) =>{
     try {
@@ -17,8 +16,8 @@ export const getUsers = async(req: Request, res: Response) =>{
 
 export const getUsersId = async(req: Request, res: Response) =>{
     try {
-        const {id} = req.params
-        const userId: User | null = await returnUser(Number(id))
+        const id = req.query.id
+        const userId = await returnUser(Number(id))
         res.status(200).json(userId);
     } catch (error) {
         res.status(400).json({error: "error al obtener el usuario"})

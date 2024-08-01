@@ -1,10 +1,56 @@
 function initMap() {
+    //config menu hamburguesa
+    const nav = document.querySelector("#nav");
+    const menu = document.querySelector("#btn-hamburguesa");
+    const cerar = document.querySelector("#btn-cerar");
+    const seccion = document.getElementById("sing-in")
+    const mycheck = document.getElementById("mycheck");
+    const barra = document.getElementById("barra")
+    const list = document.getElementById("enlace")
+
+    menu.addEventListener("click", () => {
+        if (mycheck.checked){
+            nav.classList.remove("darkinvisible")
+            nav.classList.add("dark")
+        }else{
+            nav.classList.add("visible")
+        }
+    })
+
+    cerar.addEventListener("click", () => {
+        if (mycheck.checked){
+            nav.classList.remove("dark")
+            nav.classList.add("darkinvisible")
+        }else{
+            nav.classList.remove("visible")
+        }
+    })
+
+    seccion.addEventListener("click", () => {
+        localStorage.removeItem("token");
+        window.location.href = "login.html";
+    })
+
+    mycheck.addEventListener("change", () => {
+        if (mycheck.checked) {
+            barra.classList.add("visible")
+            nav.classList.remove("visible")
+            nav.classList.add("dark")
+            list.classList.add("dark")
+        }else {
+            barra.classList.remove("visible")
+            nav.classList.remove("dark")
+            nav.classList.add("visible")
+            enlace.classList.remove("dark")
+        }
+    })
+
     const canada = { lat: 43.662155, lng: -79.397823 };
     const opcionesMapa = { zoom: 18, center: canada };
     const map = new google.maps.Map(document.getElementById("map"), opcionesMapa);
-
     const drawingManager = new google.maps.drawing.DrawingManager({
-        drawingMode: google.maps.drawing.OverlayType.POLYLINE,
+        drawingMode: null,
+        // drawingMode: google.maps.drawing.OverlayType.POLYLINE
         drawingControl: true,
         drawingControlOptions: {
             position: google.maps.ControlPosition.TOP_CENTER,
@@ -12,6 +58,7 @@ function initMap() {
         },
         polylineOptions: {
             editable: true,
+            clickable: true,
             strokeColor: '#FF0000',
             strokeWeight: 3
         }
@@ -33,12 +80,18 @@ function initMap() {
                     color: nuevaLinea.strokeColor,
                     grosor: nuevaLinea.strokeWeight
                 },
-                // id: 0
+                userId: 0
             };
             console.log("linea dibujada: ", linea)
             // Guardar la línea llamando a la función guardarLinea
             guardarLinea(linea);
+
+            google.maps.event.addListener(nuevaLinea, 'click', function(){
+                nuevaLinea.setMap(null)   //esto eliminara la linea del mapa (no renderiza esa linea pero seguira almacenada el la DB)
+                //ACA DEBE LLAMAR AL ENDPOINT QUE SE ENCARGARA DE ELIMINAR LA LINEA DE LA DB
+            })
         }
+
     });
     // const id = fetchProtectedData();
         //funcion de prueba token
@@ -64,14 +117,26 @@ function initMap() {
             const id = await fetchProtectedData();
             console.log("linea: ", linea)
             // linea.id = id
+            linea.userId = id;
+            console.log("linea: ", linea)
             const response = await axios.post('http://127.0.0.1:3002/api/lineas', linea) ;
         } catch (error) {
             console.error('Error al guardar la línea:', error);
         }
     }
 
+    async function deleteLinea(id){
+        try {
+            await axios.delete('http://localhost:3002/api/linea/delete', {params: {id: id}})
+            return 
+        } catch (error) {
+            console.error("Error al eliminar la linea seleccionada ", error)
+        }
+    }
+
     // Función para obtener y dibujar polilíneas guardadas desde el backend
     async function drawSavedPolylines() {
+        let index = 0;
         try {
             const id = await fetchProtectedData();
             const response = await axios.get('http://localhost:3002/api/lineas/get', { params: { id: id } });
@@ -81,15 +146,24 @@ function initMap() {
                 const coordenadas = line.coordenadas;
     
                 // Dibuja la línea en el mapa
-                new google.maps.Polyline({
+                const nuevaLinea = new google.maps.Polyline({
                     path: coordenadas,
                     strokeColor: line.estilos?.color || '#FF0000', // Default color
                     strokeOpacity: 1.0,
                     strokeWeight: line.estilos?.grosor || 2, // Default weight
-                    editable: false, // No editable si solo se están mostrando
+                    editable: true, // No editable si solo se están mostrando
+                    clickable: true,
                     map: map,
+                });                
+                nuevaLinea.id = response.data[index].id;
+                index += 1;
+                google.maps.event.addListener(nuevaLinea, 'click', function() {
+                    nuevaLinea.setMap(null); // Esto eliminará la línea del mapa
+                    deleteLinea(nuevaLinea.id)
+                    console.log("Línea borrada.");
                 });
             });
+            
     
         } catch (error) {
             console.error('Error al obtener las polilíneas guardadas:', error);
