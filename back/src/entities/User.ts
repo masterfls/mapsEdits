@@ -22,7 +22,10 @@ export class User {
     @Column()
     nDni: string
 
-    @Column({
+    @Column({ type: 'text', nullable: true }) //config para permitir null en postgresql
+    confirmationToken: string | null; // Token para confirmar el correo electrónico
+
+    @Column({               //estado del usuario, disabled o active
         type: "enum",
         enum: ["disabled", "active"],
         default: "disabled"

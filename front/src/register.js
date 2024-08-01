@@ -34,42 +34,5 @@ document.addEventListener('DOMContentLoaded', () => {
         console.error('Error registering user:', error);
       }
     }
-
-    const sendConfirmationEmail = (user, token) => {
-      const request = mailjet
-        .post("send", {'version': 'v3.1'})
-        .request({
-          "Messages":[
-            {
-              "From": {
-                "Email": "your-email@example.com",
-                "Name": "Your Name"
-              },
-              "To": [
-                {
-                  "Email": user.email,
-                  "Name": user.name
-                }
-              ],
-              "Subject": "Confirma tu correo electrónico",
-              "HTMLPart": `<p>Hola ${user.name},</p>
-                           <p>Gracias por registrarte. Por favor, confirma tu correo haciendo clic en el siguiente enlace:</p>
-                           <a href="http://your-domain.com/confirm?token=${token}">Confirmar Correo</a>`
-            }
-          ]
-        });
-    
-      request
-        .then((result) => {
-          console.log(result.body);
-        })
-        .catch((err) => {
-          console.error('Error al enviar el correo de confirmación:', err);
-        });
-    };
-    
-    
-
-
   });
   

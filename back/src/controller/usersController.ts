@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { User } from "../entities/User";
-import { createUser, returnUser, UserService, loginUser } from "../services/UserService";
+import { createUser, returnUser, UserService, loginUser, sendConfirmationEmail } from "../services/UserService";
 import IUserdto from "../DTO/userdto";
 import ICredential from "../DTO/credentialdto";
 import { searchCredential } from "../services/CredentialService";
@@ -32,10 +32,16 @@ export const register = async(req: Request, res: Response) =>{
         if (newUser == null){
             res.status(200).json(true)
         }else{
+            const confirmationLink = `http://localhost:3002/user/confirmation?token=${newUser.confirmationToken}`;
+            await sendConfirmationEmail(newUser.email, confirmationLink)
+            console.log('User registered. Please check your email to confirm your account.')
             res.status(200).json(false);
         }
+
+
         
     } catch (error: any) {
+        console.log('Error registering user')
         res.status(400).json({error: error.message})
     }
     

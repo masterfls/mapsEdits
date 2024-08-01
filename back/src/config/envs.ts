@@ -12,3 +12,5 @@ export const DB_USERNAME = process.env.DB_USERNAME;
 export const DB_PASSWORD = process.env.DB_PASSWORD;
 export const DB_TYPE = process.env.DB_TYPE;
 export const PORT = process.env.PORT;
+export const MJ_APIKEY_PUBLIC = process.env.MJ_APIKEY_PUBLIC;
+export const MJ_APIKEY_PRIVATE = process.env.MJ_APIKEY_PRIVATE;
