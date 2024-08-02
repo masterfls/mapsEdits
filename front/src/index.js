@@ -1,4 +1,26 @@
 function initMap() {
+
+    async function fetchProtectedData(){
+        try{
+            const token = localStorage.getItem('token'); //obtengo y guardo el token
+            const envio = await axios.get('http://127.0.0.1:3002/users/validate/token', {
+                headers: {
+                    'Authorization': `Bearer ${token}`  // Envía el token en el encabezado Authorization
+                }
+            })
+            return envio.data
+
+        }catch (error){
+            console.error("error fetching protected data: ", error)
+        }
+    }
+    
+    const getuser = async() => {
+        const token = await fetchProtectedData()
+        const data = await axios.get("http://localhost:3002/users/id", {params: {id: token}})
+        console.log("el rol es: ", data.data.user.rol)
+        if(data.data.user.rol === "user" | data.data.user.rol === "admin"){
+            
     //config menu hamburguesa
     const nav = document.querySelector("#nav");
     const menu = document.querySelector("#btn-hamburguesa");
@@ -7,6 +29,7 @@ function initMap() {
     const mycheck = document.getElementById("mycheck");
     const barra = document.getElementById("barra")
     const list = document.getElementById("enlace")
+
 
     menu.addEventListener("click", () => {
         if (mycheck.checked){
@@ -33,11 +56,15 @@ function initMap() {
 
     mycheck.addEventListener("change", () => {
         if (mycheck.checked) {
+            const ischecked = mycheck.checked;
+            localStorage.setItem("darkMode", ischecked)
             barra.classList.add("visible")
             nav.classList.remove("visible")
             nav.classList.add("dark")
             list.classList.add("dark")
         }else {
+            const ischecked = mycheck.checked;
+            localStorage.setItem("darkMode", ischecked)
             barra.classList.remove("visible")
             nav.classList.remove("dark")
             nav.classList.add("visible")
@@ -45,8 +72,58 @@ function initMap() {
         }
     })
 
-    const canada = { lat: 43.662155, lng: -79.397823 };
-    const opcionesMapa = { zoom: 18, center: canada };
+    const isDarkMode = localStorage.getItem('darkMode') === 'true';
+    if (isDarkMode){
+        barra.classList.add("visible")
+        nav.classList.remove("visible")
+        nav.classList.add("dark")
+        list.classList.add("dark")
+        mycheck.checked = true
+    }else{
+        barra.classList.remove("visible")
+        nav.classList.remove("dark")
+        nav.classList.add("visible")
+        enlace.classList.remove("dark")
+        mycheck.checked = false;
+    }
+    
+
+    // const canada = { lat: 43.662155, lng: -79.397823 };
+    const opcionesMapa = { zoom: 18, mapTypeId: 'roadmap' };
+
+    //uso de geolocation para abrir el mapa en la posicion actual del dispositivo
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+            var pos = {
+                lat: position.coords.latitude,
+                lng: position.coords.longitude
+            };
+
+            map.setCenter(pos);
+
+            var marker = new google.maps.Marker({
+                position: pos,
+                map: map,
+                title: 'Ubicación actual'
+            });
+        }, function() {
+            handleLocationError(true, map.getCenter());
+        });
+    } else {
+        // Browser doesn't support Geolocation
+        handleLocationError(false, map.getCenter());
+    }
+
+
+function handleLocationError(browserHasGeolocation, pos) {
+    alert(browserHasGeolocation ?
+          'Error: El servicio de Geolocalización falló.' :
+          'Error: Tu navegador no soporta geolocalización.');
+    }
+
+
+
+
     const map = new google.maps.Map(document.getElementById("map"), opcionesMapa);
     const drawingManager = new google.maps.drawing.DrawingManager({
         drawingMode: null,
@@ -96,20 +173,7 @@ function initMap() {
     // const id = fetchProtectedData();
         //funcion de prueba token
 
-    async function fetchProtectedData(){
-        try{
-            const token = localStorage.getItem('token'); //obtengo y guardo el token
-            const envio = await axios.get('http://127.0.0.1:3002/users/validate/token', {
-                headers: {
-                    'Authorization': `Bearer ${token}`  // Envía el token en el encabezado Authorization
-                }
-            })
-            return envio.data
 
-        }catch (error){
-            console.error("error fetching protected data: ", error)
-        }
-    }
 
     // Función para guardar la línea en tu aplicación
     async function guardarLinea(linea) {
@@ -172,6 +236,12 @@ function initMap() {
     
     // Llamar a la función para dibujar las polilíneas cuando se cargue el mapa
     drawSavedPolylines();
+        }else{
+            alert("welcome to mapsedits, soon have access ⛷️")
+        }
+    }
+    getuser()
+    
 }
 
 // Llamar a la función para inicializar el mapa cuando se cargue la página

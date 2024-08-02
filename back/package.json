@@ -7,7 +7,13 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon src/index.ts",
     "dev": "nodemon src/index.ts",
-    "build": "tsc"
+    "build": "tsc",
+    "typeorm": "typeorm",
+    "typeorm:cli": "ts-node ./node_modules/typeorm/cli.js",
+    "typeorm:generate": "npm run typeorm:cli migration:generate",
+    "typeorm:run": "npm run typeorm:cli migration:run",
+    "typeorm:revert": "npm run typeorm:cli migration:revert",
+    "typeorm:create": "npm run typeorm:cli migration:create"
   },
   "keywords": [],
   "author": "",

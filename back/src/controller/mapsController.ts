@@ -37,7 +37,6 @@ export const polylines = async(req: Request, res: Response) =>{
     try {
         const id = req.query.id;
         const lineas: Maps[] = await polylineGet(Number(id))
-        console.log("lineas: ", lineas)
         res.status(200).json(lineas);
     } catch (error) {
         res.status(400).json({error: "Error al obtener las lineas"})

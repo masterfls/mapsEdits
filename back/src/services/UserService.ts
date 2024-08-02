@@ -94,7 +94,6 @@ export const sendConfirmationEmail = async (toEmail: string, confirmationLink: s
 
     try {
         const response = await request;
-        console.log(response.body);
         return response.body;
     } catch (err) {
         console.error(err);

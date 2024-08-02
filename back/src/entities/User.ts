@@ -22,6 +22,13 @@ export class User {
     @Column()
     nDni: string
 
+    @Column({               //estado del usuario, disabled o active
+        type: "enum",
+        enum: ["user", "admin", "disabled"],
+        default: "user"
+    })
+    rol: "user" | "admin" | "disabled";
+
     @Column({ type: 'text', nullable: true }) //config para permitir null en postgresql
     confirmationToken: string | null; // Token para confirmar el correo electrónico
 
@@ -30,7 +37,7 @@ export class User {
         enum: ["disabled", "active"],
         default: "disabled"
     })
-    status: string
+    status: "disabled" | "active";
 
     @OneToOne(() => Credential)                //indica que es una relacion de 1 a 1 con la tabla de esa entidad
     @JoinColumn({name: "credentialId"})        //JoinColumn define que lado de la relacion contiene la columna de union con una clave externa

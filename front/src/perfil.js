@@ -1,6 +1,6 @@
 
 document.getElementById('back-button').addEventListener('click', function() {
-    window.location.href = "index.html";
+    window.location.replace("http://127.0.0.1:8080/pages/index.html")
 });
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -24,9 +24,10 @@ document.addEventListener("DOMContentLoaded", () => {
             const data = await axios.get('http://localhost:3002/users/id', {params: {id: token}})
 
             //completo los campos con la informacion obtenida desde el servidor
+            const date = new Date(data.data.user.birthdate)
             name.innerHTML = data.data.user.name
             mail.innerHTML = data.data.user.email
-            birthdate.innerHTML = data.data.user.birthdate
+            birthdate.innerHTML = date.toLocaleDateString()
             dni.innerHTML = data.data.user.nDni
             username.innerHTML = data.data.username
             h2.innerHTML = "Hello! " + data.data.username

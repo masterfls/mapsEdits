@@ -10,7 +10,6 @@ export const savePolyline = async (data: IMaps): Promise<Maps> => {
     if (!user) {
         throw new Error("Usuario Inexistente");
     }
-    console.log(user)
     // Crea una nueva línea
     const newPolyline = MapsModel.create({
         coordenadas: data.coordenadas,
@@ -30,7 +29,6 @@ export const polylineGet = async (id: number): Promise<Maps[]> => {
     const maps = await MapsModel.find({
         where: {user: {id: id }}
     });    //accedo a la tabla Mpas de la DB y me traigo todo lo que hay con el metodo find
-    console.log("lineas: ",maps)
     return maps              
 }
 
@@ -38,8 +36,7 @@ export const deleteLinea = async (id: number) => {
     const line = await MapsModel.find({
         where: {id: id}
     });    //accedo a la tabla Mpas de la DB y me traigo todo lo que hay con el metodo find
-    const del = await MapsModel.delete(id)
-    console.log("linea que deberia borrar: ", line)     
+    const del = await MapsModel.delete(id)  
     return       
 }
 

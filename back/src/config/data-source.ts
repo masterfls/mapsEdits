@@ -17,7 +17,7 @@ export  const  AppDataSource  =  new  DataSource ( {
     logging : false,                            //indica todas las peticiones realizadas en la terminal del back
     entities : [ User, Credential, Maps], 
     subscribers : [ ], 
-    migrations : [ ], 
+    migrations : [], 
 } )
 
 export const UserModel = AppDataSource.getRepository(User)   //get repository se utiliza para acceder a una entidad. nos proporciona varios metodos para realizar operacinoes CRUD sobre los
