@@ -1,4 +1,4 @@
-import { register, getUsers, getUsersId, loginUsers } from "../controller/usersController";
+import { register, getUsers, getUsersId, loginUsers, getdisabled, rolcontroller, deleteUser } from "../controller/usersController";
 import { Router } from "express";
 import authMiddleware from "../middleware/tokenvalidate";
 import { confirmEmail } from "../services/UserService";
@@ -9,8 +9,12 @@ router.get("/users", getUsers);
 router.get("/users/id", getUsersId);
 router.post("/users/register", register)
 router.post("/users/login", loginUsers)
+router.get("/users/disabled", getdisabled)
+router.put("/users/update", rolcontroller)
+router.delete("/user/delete", deleteUser)
+
 router.get('/users/validate/token', authMiddleware, (req: any,res) => {
-    res.json(req.user.id)
+    res.json(req.user)
 })
 router.get('/user/confirmation', async (req, res) => {
     const { token } = req.query;

@@ -14,3 +14,4 @@ export const DB_TYPE = process.env.DB_TYPE;
 export const PORT = process.env.PORT;
 export const MJ_APIKEY_PUBLIC = process.env.MJ_APIKEY_PUBLIC;
 export const MJ_APIKEY_PRIVATE = process.env.MJ_APIKEY_PRIVATE;
+export const ACCESS_TOKEN_SECRET = process.env.ACCESS_TOKEN_SECRET

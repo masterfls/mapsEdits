@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { User } from "../entities/User";
-import { createUser, returnUser, UserService, loginUser, sendConfirmationEmail } from "../services/UserService";
+import { createUser, returnUser, UserService, loginUser, sendConfirmationEmail, UserRole, userDelete, userRole } from "../services/UserService";
 import IUserdto from "../DTO/userdto";
 import ICredential from "../DTO/credentialdto";
 import { searchCredential } from "../services/CredentialService";
@@ -11,6 +11,36 @@ export const getUsers = async(req: Request, res: Response) =>{
         res.status(200).json(user);
     } catch (error) {
         res.status(400).json({error: "Error al obtener los usuarios"})
+    }
+}
+
+export const rolcontroller = async(req: Request, res: Response) => {
+    try {
+        const {id, role} = req.body
+        const user = await userRole(id, role)
+        console.log("Usuario modificado")
+    } catch (error) {
+        console.error({error: "error al modificar rol del usuario"})
+    }
+}
+
+export const deleteUser = async(req: Request, res: Response) => {
+    try {
+        const id = req.query.id
+        const user = await userDelete(Number(id))
+        console.log("usuario eliminado de la base de datos")
+    } catch (error) {
+        console.error({error: "error al eliminar usuario de la base de datos"})
+    }
+}
+
+
+export const getdisabled = async(req: Request, res: Response) => {
+    try {
+        const user: User[] = await UserRole()
+        res.status(200).json(user);
+    } catch (error) {
+        res.status(400).json({error: "Error al obtener usuarios"})
     }
 }
 

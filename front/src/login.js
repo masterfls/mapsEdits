@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
+  const parrafo = document.getElementById('parrafo')
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', function() {
       navigator.serviceWorker.register('./service-worker.js').then(function(registration) {
@@ -28,10 +29,11 @@ document.addEventListener('DOMContentLoaded', () => {
       try {
         const response = await axios.post('http://127.0.0.1:3002/users/login', userlogin);
         if(response.data.token){
-          localStorage.setItem('token', response.data.token)
+          sessionStorage.setItem('token', response.data.token)
           window.location.href="index.html"
         }
       } catch (error) {
+        parrafo.innerHTML = "Incorrect Username or Password"
         console.error('Error registering user:', error);
       }
     }

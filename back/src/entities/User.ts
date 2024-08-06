@@ -25,7 +25,7 @@ export class User {
     @Column({               //estado del usuario, disabled o active
         type: "enum",
         enum: ["user", "admin", "disabled"],
-        default: "user"
+        default: "disabled"
     })
     rol: "user" | "admin" | "disabled";
 

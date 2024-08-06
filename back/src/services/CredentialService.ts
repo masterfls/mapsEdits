@@ -38,24 +38,11 @@ export const searchCredential = async (searchData: ICredential) => {
     }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-// export const searchCredential = async (searchData: ICredential): Promise<number> => {
-//     const userId: Credential | null = await CredentialModel.findOneBy({username: searchData.username}) //uso el metodo finOneBy para obtener el registro en la tabala de la base de datos que coincida en el username brindado (en caso de existir)
-//     if (!userId) {              //si no existe significa que las credenciales no existe por lo que el usuario no existe o las ingreso mal
-//         throw Error("Credenciales Not Found")
-//     } else if (userId.password !== searchData.password){
-//         throw Error("Password Incorrect")   //si el usuario existe pero la contraseña es incorrecta, el usuario si existe, esta mal la contraseña
-//     }else{
-//         return userId.id;   //en caso de que todo sea correcto retorno el id que referencia el par credenciales
-//     }
-// }
+export const credentialsDelete = async(id:number) => {
+    const credential = await CredentialModel.delete({id:id})
+    if (credential.affected === 0) {
+        console.log("no se encontraron las credenciales del usuario especificado")
+    } else {
+        console.log("credenciales eliminadas")
+    }
+}

@@ -1,4 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
+import {ACCESS_TOKEN_SECRET} from '../config/envs'
 const jwt =  require('jsonwebtoken');
 
 interface AuthRequest extends Request {
@@ -6,14 +7,18 @@ interface AuthRequest extends Request {
 }
 
 const authMiddleware = (req: AuthRequest, res: Response, next: NextFunction) => {
-    const token = req.header('Authorization')?.split(' ')[1];
+    const authHeader  = req.header('Authorization') 
 
-    if (!token) {
+    if (!authHeader ) {
         return res.status(401).json({ message: 'Access denied, token missing' });
     }
-
+    const token = authHeader.split(' ')[1];
+    if(!token){
+        return res.status(401).json({ message: 'Access denied, token missing' });
+    }
     try {
-      const verified = jwt.verify(token, 'your_secret_key');
+      const verified = jwt.verify(token,  process.env.ACCESS_TOKEN_SECRET as string);
+        console.log("verified:", verified)
         req.user = verified;
         next();
     } catch (error) {

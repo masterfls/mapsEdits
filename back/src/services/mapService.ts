@@ -26,6 +26,7 @@ export const savePolyline = async (data: IMaps): Promise<Maps> => {
 
 
 export const polylineGet = async (id: number): Promise<Maps[]> => {
+    console.log("hola")
     const maps = await MapsModel.find({
         where: {user: {id: id }}
     });    //accedo a la tabla Mpas de la DB y me traigo todo lo que hay con el metodo find

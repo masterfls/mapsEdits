@@ -1,7 +1,7 @@
 import { User } from "../entities/User";
 import { CredentialModel, UserModel } from "../config/data-source";
 import { Credential } from "../entities/Credential";
-import { createCredential, searchCredential } from "./CredentialService";
+import { createCredential, credentialsDelete, searchCredential } from "./CredentialService";
 import IUserdto from "../DTO/userdto";
 import ICredential from "../DTO/credentialdto";
 import Mailjet from 'node-mailjet'
@@ -15,11 +15,40 @@ export const UserService = async (): Promise<User[]> => {
 }
 
 export const returnUser = async(id: number): Promise<object | null> => {
+    console.log("estoy aca")
     const user = await UserModel.findOneBy({id})    //me traigo de la tabla User de la DB al primer registro que coincida con el id recibido por parametros
     const credentials: Credential | null = await CredentialModel.findOneBy({id: id})
     const username = credentials?.username
 
     return {user, username}
+}
+
+export const UserRole = async (): Promise<User[]> => {
+    const disabled: "disabled" = "disabled"
+    const user = await UserModel.find({where: {rol: disabled}})
+    return user;
+}
+
+export const userRole = async(id: number, rol:"user" | "admin")=> {
+    const user: User | null = await UserModel.findOneBy({id: id})
+    if (user){
+        user.rol = rol;
+        await UserModel.save(user)
+        return user;
+    }else{
+        console.log("no es encontro el usuario")
+        return user;
+    }
+}
+
+export const userDelete = async(id: number) => {
+    const user = await UserModel.delete({id: id})
+    await credentialsDelete(id)
+    if (user.affected === 0) {
+        console.log("no se encontro el usuario")
+    } else {
+        console.log("usuario eliminado")
+    }
 }
 
 const validateUser = async(email: string, username: string): Promise<boolean> => {

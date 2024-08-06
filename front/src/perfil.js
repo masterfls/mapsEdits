@@ -6,7 +6,7 @@ document.getElementById('back-button').addEventListener('click', function() {
 document.addEventListener("DOMContentLoaded", () => {
     async function fetchProtectedData(){
         try{
-            const token = localStorage.getItem('token'); //obtengo y guardo el token
+            const token = sessionStorage.getItem('token'); //obtengo y guardo el token
             const envio = await axios.get('http://127.0.0.1:3002/users/validate/token', {
                 headers: {
                     'Authorization': `Bearer ${token}`  // Envía el token en el encabezado Authorization
@@ -20,8 +20,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     const response = async() => {
         try{
-            const token = await fetchProtectedData()
-            const data = await axios.get('http://localhost:3002/users/id', {params: {id: token}})
+            const token = sessionStorage.getItem('token'); //obtengo y guardo el token
+            const id = await fetchProtectedData();
+            const data = await axios.get('http://localhost:3002/users/id', {params: {id: id.id}})
 
             //completo los campos con la informacion obtenida desde el servidor
             const date = new Date(data.data.user.birthdate)
