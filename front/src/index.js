@@ -96,6 +96,7 @@ function initMap() {
             mycheck.checked = false;
         }
 
+
         // const canada = { lat: 43.662155, lng: -79.397823 };
         const opcionesMapa = { zoom: 18, mapTypeId: 'roadmap' };
 
@@ -129,8 +130,7 @@ function initMap() {
             'Error: Tu navegador no soporta geolocalización.');
         }
 
-
-
+       
 
         const map = new google.maps.Map(document.getElementById("map"), opcionesMapa);
         const drawingManager = new google.maps.drawing.DrawingManager({

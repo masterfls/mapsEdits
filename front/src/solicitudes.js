@@ -97,6 +97,7 @@ const renderizar = addEventListener("DOMContentLoaded", () => {
             }
         }else{
             alert("permisos insuficientes. se necesita en rol de admin para acceder ")
+            window.location.href = 'index.html'
         }
         }
     response()
