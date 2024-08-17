@@ -1,3 +1,37 @@
+    document.addEventListener('DOMContentLoaded', function () {
+        // Toggle Configuration menu
+        document.getElementById('configuracion-toggle').addEventListener('click', function (event) {
+          event.preventDefault();
+          const configMenu = document.getElementById('configuracion-menu');
+          configMenu.style.display = configMenu.style.display === 'none' ? 'block' : 'none';
+          configMenu.classList.toggle('active');
+        });
+      
+        // Toggle Line menu
+        document.getElementById('line-toggle').addEventListener('click', function (event) {
+          event.preventDefault();
+          const lineMenu = document.getElementById('line-menu');
+          lineMenu.style.display = lineMenu.style.display === 'none' ? 'block' : 'none';
+          lineMenu.classList.toggle('active');
+        });
+      
+        // Toggle Grosor menu
+        document.getElementById('grosor-toggle').addEventListener('click', function (event) {
+          event.preventDefault();
+          const grosorMenu = document.getElementById('grosor-menu');
+          grosorMenu.style.display = grosorMenu.style.display === 'none' ? 'block' : 'none';
+          grosorMenu.classList.toggle('active');
+        });
+      
+        // Toggle Color menu
+        document.getElementById('color-toggle').addEventListener('click', function (event) {
+          event.preventDefault();
+          const colorMenu = document.getElementById('color-menu');
+          colorMenu.style.display = colorMenu.style.display === 'none' ? 'block' : 'none';
+          colorMenu.classList.toggle('active');
+        });
+      });
+      
 function initMap() {
     async function fetchProtectedData(){
         try{
@@ -17,6 +51,7 @@ function initMap() {
             console.error("error fetching protected data: ", error)
         }
     }
+
     
     
     const getuser = async() => {
@@ -39,6 +74,10 @@ function initMap() {
         const mycheck = document.getElementById("mycheck");
         const barra = document.getElementById("barra")
         const list = document.getElementById("enlace")
+        const grosorItems = document.querySelectorAll('#grosor-menu li a');
+        const colorItems = document.querySelectorAll('#color-menu li a')
+        const grosorMenu = document.getElementById('grosor-menu');
+        const colorMenu = document.getElementById('color-menu');
 
         menu.addEventListener("click", () => {
             if (mycheck.checked && menu){
@@ -58,6 +97,28 @@ function initMap() {
                 nav.classList.remove("visible")
             }
         })
+
+        grosorItems.forEach(function (item) {
+            item.addEventListener('click', function (event) {
+              event.preventDefault();  // Evitar el comportamiento predeterminado del enlace
+              const selectedGrosor = this.textContent;  // Capturar el texto del elemento seleccionado
+              sessionStorage.setItem('tokenGrosor', selectedGrosor)
+              const tokenGrosor = sessionStorage.getItem('tokenGrosor') 
+              grosorMenu.style.display = 'none'
+
+            });
+          });
+
+        colorItems.forEach(function(item) {
+            item.addEventListener('click', function(event) {
+                event.preventDefault()
+                const selectedColor = this.textContent
+                sessionStorage.setItem('tokenColor', selectedColor)
+                const tokenColor = sessionStorage.getItem('tokenColor')
+                colorMenu.style.display = 'none'
+            })
+        })
+
 
         seccion.addEventListener("click", (event) => {
             sessionStorage.removeItem("token");
@@ -97,7 +158,6 @@ function initMap() {
         }
 
 
-        // const canada = { lat: 43.662155, lng: -79.397823 };
         const opcionesMapa = { zoom: 18, mapTypeId: 'roadmap' };
 
         //uso de geolocation para abrir el mapa en la posicion actual del dispositivo
@@ -131,7 +191,9 @@ function initMap() {
         }
 
        
-
+        const tokenGrosor = sessionStorage.getItem('tokenGrosor')
+        const tokenColor = sessionStorage.getItem('tokenColor')
+        console.log(`${tokenColor}`)
         const map = new google.maps.Map(document.getElementById("map"), opcionesMapa);
         const drawingManager = new google.maps.drawing.DrawingManager({
             drawingMode: null,
@@ -144,8 +206,8 @@ function initMap() {
             polylineOptions: {
                 editable: true,
                 clickable: true,
-                strokeColor: '#FF0000',
-                strokeWeight: 3
+                strokeColor: tokenColor || '000080',
+                strokeWeight: tokenGrosor || 5
             }
         });
         drawingManager.setMap(map);
@@ -225,7 +287,7 @@ function initMap() {
                     // Dibuja la línea en el mapa
                     const nuevaLinea = new google.maps.Polyline({
                         path: coordenadas,
-                        strokeColor: line.estilos?.color || '#FF0000', // Default color
+                        strokeColor: tokenColor || '#000080', // Default color
                         strokeOpacity: 1.0,
                         strokeWeight: line.estilos?.grosor || 2, // Default weight
                         editable: true, // No editable si solo se están mostrando
