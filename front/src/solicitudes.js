@@ -13,6 +13,9 @@ const renderizar = addEventListener("DOMContentLoaded", () => {
             console.error("error fetching protected data: ", error)
         }
     }
+
+    const miToken = sessionStorage.getItem('token')
+    if(!miToken) return window.location.href = 'login.html'
     
     let rol = '';
     sessionStorage.removeItem("user")
@@ -34,7 +37,7 @@ const renderizar = addEventListener("DOMContentLoaded", () => {
             const container = document.getElementById("solicitudes")
             container.innerHTML = ''; //vacio el contenedor por si las moscas
             let counter = 0;
-            // if(){}
+            
             try {
                 users.forEach(user => {
                     counter ++;

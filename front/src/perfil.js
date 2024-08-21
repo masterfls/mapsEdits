@@ -18,6 +18,8 @@ document.addEventListener("DOMContentLoaded", () => {
             console.error("error fetching protected data: ", error)
         }
     }
+    const miToken = sessionStorage.getItem('token')
+    if(!miToken) return window.location.href = 'login.html'
     const response = async() => {
         try{
             const token = sessionStorage.getItem('token'); //obtengo y guardo el token

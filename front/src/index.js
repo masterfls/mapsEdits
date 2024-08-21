@@ -30,6 +30,7 @@
           colorMenu.style.display = colorMenu.style.display === 'none' ? 'block' : 'none';
           colorMenu.classList.toggle('active');
         });
+          
       });
       
 function initMap() {
@@ -51,7 +52,8 @@ function initMap() {
             console.error("error fetching protected data: ", error)
         }
     }
-
+    const miToken = sessionStorage.getItem('token')
+    if(!miToken) return window.location.href = 'login.html'
     
     
     const getuser = async() => {
