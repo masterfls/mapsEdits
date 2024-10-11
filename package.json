@@ -23,6 +23,7 @@
     "caniuse-lite": "^1.0.30001638",
     "chrome-trace-event": "^1.0.4",
     "clone-deep": "^4.0.1",
+    "cors": "^2.8.5",
     "colorette": "^2.0.20",
     "commander": "^2.20.3",
     "create-require": "^1.1.1",
