@@ -48,6 +48,10 @@
     "start": "live-server --open=pages/login.html",
     "build": "echo 'No build step needed' && mkdir -p ../back/dist/public && cp -r ./* ../back/dist/public"
   },
+  "engines": {
+    "node": "20.x",
+    "npm": "10.x"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC"
