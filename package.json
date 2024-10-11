@@ -191,10 +191,13 @@
     "webpack-cli": "^5.1.4"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node app",
-    "dev": "nodemon src/index.ts",
-    "build": "tsc"
+    "postinstall": "npm install --prefix front && npm install --prefix back",
+    "build": "npm run build --prefix front && npm run build --prefix back",
+    "start": "npm run start --prefix back",
+    "dev": "npm run dev --prefix back"
+  },
+  "engines": {
+    "node": "14.x"
   },
   "keywords": [],
   "author": "",
