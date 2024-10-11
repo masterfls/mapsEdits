@@ -11,7 +11,9 @@ const app = (0, express_1.default)(); //creo mi servidor en la constante app
 app.use((0, morgan_1.default)("dev"));
 app.use(express_1.default.json());
 app.use((0, cors_1.default)({
-    origin: 'https://ievg.online', // Permitir solicitudes desde el dominio de tu frontend
+    origin: process.env.NODE_ENV === 'production'
+        ? 'https://ievg-online-21570d3c5e46.herokuapp.com' // Cambia esto a la URL de tu app en Heroku
+        : 'http://localhost:3000', // Cambia esto a la URL de tu frontend local
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization']
 }));

@@ -199,7 +199,8 @@
   },
   "engines": {
     "node": "20.x",
-    "npm": "10.x"
+    "npm": "10.x",
+    "jsonwebtoken": "9.x"
   },
   "keywords": [],
   "author": "",
