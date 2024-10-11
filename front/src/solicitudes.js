@@ -2,7 +2,7 @@ const renderizar = addEventListener("DOMContentLoaded", () => {
     async function fetchProtectedData(){
         try{
             const token = sessionStorage.getItem('token'); //obtengo y guardo el token
-            const envio = await axios.get('http://127.0.0.1:3002/users/validate/token', {
+            const envio = await axios.get('https://ievg.online/users/validate/token', {
                 headers: {
                     'Authorization': `Bearer ${token}`  // Envía el token en el encabezado Authorization
                 }
@@ -14,8 +14,11 @@ const renderizar = addEventListener("DOMContentLoaded", () => {
         }
     }
 
+    const container = document.getElementById("solicitudes")
+    container.innerHTML = ''; //vacio el contenedor por si las moscas
+
     const miToken = sessionStorage.getItem('token')
-    if(!miToken) return window.location.href = 'login.html'
+    if(!miToken) return window.location.href = '/index.html'
     
     let rol = '';
     sessionStorage.removeItem("user")
@@ -24,18 +27,26 @@ const renderizar = addEventListener("DOMContentLoaded", () => {
     const response = async () => {
         //obtengo el usuario que esta realizando esta peticion. si ese usuario tiene el rol admin, renderizo la informacion.
         const id = await fetchProtectedData()
-        const user = await axios.get("http://localhost:3002/users/id", {params: {id: id.id}});
+        const user = await axios.get("https://ievg.online/users/id", {params: {id: id.id}});
         const rol = user.data.user.rol
         console.log("este es el usuario: ", user.data.user)
         console.log("este es el rol del usuario: ", rol)
 
         if(rol === 'admin'){
 
-            const data = await axios.get("http://localhost:3002/users/disabled")
+            const data = await axios.get("https://ievg.online/users/disabled")
             const users = data.data
+            
+            if (users.length === 0){
+                const mensaje = document.createElement("h3")
+                mensaje.classList.add("mensaje")
+                mensaje.innerText = "no hay usuarios en espera"
+
+                container.appendChild(mensaje)
+
+            }
+            
             console.log("esto hay en users (data.data): ", users)
-            const container = document.getElementById("solicitudes")
-            container.innerHTML = ''; //vacio el contenedor por si las moscas
             let counter = 0;
             
             try {
@@ -100,7 +111,7 @@ const renderizar = addEventListener("DOMContentLoaded", () => {
             }
         }else{
             alert("permisos insuficientes. se necesita en rol de admin para acceder ")
-            window.location.href = 'index.html'
+            window.location.href = 'home.html'
         }
         }
     response()
@@ -108,7 +119,7 @@ const renderizar = addEventListener("DOMContentLoaded", () => {
 
 const userRole = async(user, rol) =>{
     console.log(`el id del usaurio actual es: ${user.id} y el rol elejido es: ${rol}`)
-    await axios.put("http://localhost:3002/users/update", {
+    await axios.put("https://ievg.online/users/update", {
         id: user.id,
         role: rol
     })
@@ -116,7 +127,7 @@ const userRole = async(user, rol) =>{
 }
 
 const userDelete = async(id) => {
-    await axios.delete("http://localhost:3002/user/delete", {params: {id: id}})
+    await axios.delete("https://ievg.online/users/delete", {params: {id: id}})
 }
 
 const handleRoleSelection = (user, role) => {

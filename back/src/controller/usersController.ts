@@ -55,30 +55,33 @@ export const getUsersId = async(req: Request, res: Response) =>{
 }
 
 
-export const register = async(req: Request, res: Response) =>{
+export const register = async (req: Request, res: Response) => {
     try {
-        const { name, email, birthdate, nDni, username, password }: IUserdto = req.body
-        const newUser: User | null = await createUser({ name, email, birthdate, nDni, username, password  }) 
-        if (newUser == null){
-            res.status(200).json(true)
-        }else{
-            const confirmationLink = `http://localhost:3002/user/confirmation?token=${newUser.confirmationToken}`;
-            await sendConfirmationEmail(newUser.email, confirmationLink)
-            console.log('User registered. Please check your email to confirm your account.')
-            res.status(200).json(false);
-        }
-
-
+        const { name, email, birthdate, nDni, username, password }: IUserdto = req.body;
+        const newUser: User | null = await createUser({ name, email, birthdate, nDni, username, password });
         
+        if (newUser == null) {
+            res.status(200).json(true); // Indica que el registro fue exitoso pero no se creó un nuevo usuario.
+        } else {
+            // Genera el enlace de confirmación
+            const confirmationLink = `https://ievg.online/users/confirmation?token=${newUser.confirmationToken}`;
+            // Crea el texto del mensaje
+            const text = `Por favor, confirma tu cuenta haciendo clic en el siguiente enlace: ${confirmationLink}`;
+            // Envía el correo de confirmación
+            await sendConfirmationEmail(newUser.email, "Confirma tu cuenta", text);
+            console.log('User registered. Please check your email to confirm your account.');
+            res.status(200).json(false); // Indica que el usuario fue creado exitosamente.
+        }
     } catch (error: any) {
-        console.log('Error registering user')
-        res.status(400).json({error: error.message})
+        console.log('Error registering user');
+        res.status(400).json({ error: error.message });
     }
-    
 }
+
 
 export const loginUsers = async(req: Request, res: Response) =>{
     try {
+        console.log("hola")
         const { username, password }: ICredential = req.body
         const token = await searchCredential({ username, password })
         if (token){

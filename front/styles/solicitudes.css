@@ -16,6 +16,16 @@ body {
     height: auto;
     max-width: 1200px;
 }
+.mensaje{
+    font-size: 1.5em;
+    color: #ff6f61;
+    text-align: center;
+    padding: 20px;
+    margin: 20px auto;
+    background-color: #FCE4EC;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
 .card {
     display: flex;
     height: 100px;

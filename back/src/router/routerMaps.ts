@@ -4,11 +4,11 @@ import authMiddleware from "../middleware/tokenvalidate";
 
 const router: Router = Router()
 
-router.post("/api/lineas", getPolyline, authMiddleware, (req: any,res) => {
+router.post("/post", getPolyline, authMiddleware, (req: any,res) => {
     res.json(req.user.id)
 });
-router.get("/api/lineas/get", polylines)
-router.get("/api/linea/:id", getPolylineId);
-router.delete("/api/linea/delete", deletePolyline)
+router.get("/get", polylines)
+router.get("/:id", getPolylineId);
+router.delete("/delete", deletePolyline)
 
 export default router;

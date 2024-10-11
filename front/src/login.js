@@ -27,10 +27,11 @@ document.addEventListener('DOMContentLoaded', () => {
   
     async function userSave(userlogin) {
       try {
-        const response = await axios.post('http://127.0.0.1:3002/users/login', userlogin);
+        const response = await axios.post('https://ievg.online/users/login', userlogin);
         if(response.data.token){
           sessionStorage.setItem('token', response.data.token)
-          window.location.href="index.html"
+          window.location.href = "https://ievg.online/front/pages/home.html";
+
         }
       } catch (error) {
         parrafo.innerHTML = "Incorrect Username or Password"

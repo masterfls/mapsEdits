@@ -5,18 +5,21 @@ import { confirmEmail } from "../services/UserService";
 
 const router: Router = Router()
 
-router.get("/users", getUsers);
-router.get("/users/id", getUsersId);
-router.post("/users/register", register)
-router.post("/users/login", loginUsers)
-router.get("/users/disabled", getdisabled)
-router.put("/users/update", rolcontroller)
-router.delete("/user/delete", deleteUser)
+router.get("/test", (req, res) => {
+    res.send("Test route is working");
+});
+router.get("/get", getUsers);
+router.get("/id", getUsersId);
+router.post("/register", register)
+router.post("/login", loginUsers)
+router.get("/disabled", getdisabled)
+router.put("/update", rolcontroller)
+router.delete("/delete", deleteUser)
 
-router.get('/users/validate/token', authMiddleware, (req: any,res) => {
+router.get('/validate/token', authMiddleware, (req: any,res) => {
     res.json(req.user)
 })
-router.get('/user/confirmation', async (req, res) => {
+router.get('/confirmation', async (req, res) => {
     const { token } = req.query;
 
     if (typeof token !== 'string') {

@@ -3,13 +3,17 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const express_1 = __importDefault(require("express"));
-const indexRouter_1 = __importDefault(require("./routes/indexRouter"));
+const express_1 = __importDefault(require("express")); //me traigo la libreria express que me servira para crear mi servidor
 const cors_1 = __importDefault(require("cors"));
 const morgan_1 = __importDefault(require("morgan"));
-const app = (0, express_1.default)();
+const index_1 = __importDefault(require("./router/index"));
+const app = (0, express_1.default)(); //creo mi servidor en la constante app
 app.use((0, morgan_1.default)("dev"));
 app.use(express_1.default.json());
-app.use((0, cors_1.default)());
-app.use(indexRouter_1.default);
+app.use((0, cors_1.default)({
+    origin: 'https://ievg.online', // Permitir solicitudes desde el dominio de tu frontend
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+}));
+app.use(index_1.default); //tengo el servidor, el enrutador, se hace la peticion y en esta linea lego hacia donde ira la solicitud, en este caso al anrutador
 exports.default = app;

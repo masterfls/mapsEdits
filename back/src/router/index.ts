@@ -4,7 +4,7 @@ import routerUser from "./routerUser";
 
 const router: Router = Router();            // creo mi enrutador
 
-router.use("/", routerUser)
-router.use("/", routerMaps);
+router.use("/users", routerUser);
+router.use("/api/lineas", routerMaps);
 
 export default router;

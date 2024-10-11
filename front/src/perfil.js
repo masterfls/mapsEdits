@@ -1,13 +1,13 @@
 
 document.getElementById('back-button').addEventListener('click', function() {
-    window.location.replace("http://127.0.0.1:8080/pages/index.html")
+    window.location.href = "home.html"
 });
 
 document.addEventListener("DOMContentLoaded", () => {
     async function fetchProtectedData(){
         try{
             const token = sessionStorage.getItem('token'); //obtengo y guardo el token
-            const envio = await axios.get('http://127.0.0.1:3002/users/validate/token', {
+            const envio = await axios.get('https://ievg.online/users/validate/token', {
                 headers: {
                     'Authorization': `Bearer ${token}`  // Envía el token en el encabezado Authorization
                 }
@@ -19,12 +19,12 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
     const miToken = sessionStorage.getItem('token')
-    if(!miToken) return window.location.href = 'login.html'
+    if(!miToken) return window.location.href = '/index.html'
     const response = async() => {
         try{
             const token = sessionStorage.getItem('token'); //obtengo y guardo el token
             const id = await fetchProtectedData();
-            const data = await axios.get('http://localhost:3002/users/id', {params: {id: id.id}})
+            const data = await axios.get('https://ievg.online/users/id', {params: {id: id.id}})
 
             //completo los campos con la informacion obtenida desde el servidor
             const date = new Date(data.data.user.birthdate)
@@ -47,8 +47,4 @@ document.addEventListener("DOMContentLoaded", () => {
     const username = document.getElementById("username")
     const dni = document.getElementById("nDni")
     const h2 = document.getElementById("title")
-    
-
-
-
 })

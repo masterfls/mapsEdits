@@ -12,7 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.User = void 0;
 const typeorm_1 = require("typeorm");
 const Credential_1 = require("./Credential");
-const Appointments_1 = require("./Appointments");
+const Maps_1 = require("./Maps");
 let User = class User {
 };
 exports.User = User;
@@ -40,14 +40,39 @@ __decorate([
     __metadata("design:type", String)
 ], User.prototype, "nDni", void 0);
 __decorate([
-    (0, typeorm_1.OneToOne)(() => Credential_1.Credential),
-    (0, typeorm_1.JoinColumn)(),
-    __metadata("design:type", Credential_1.Credential)
+    (0, typeorm_1.Column)({
+        type: "enum",
+        enum: ["user", "admin", "disabled"],
+        default: "disabled"
+    }),
+    __metadata("design:type", String)
+], User.prototype, "rol", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ type: 'text', nullable: true }) //config para permitir null en postgresql
+    ,
+    __metadata("design:type", Object)
+], User.prototype, "confirmationToken", void 0);
+__decorate([
+    (0, typeorm_1.Column)({
+        type: "enum",
+        enum: ["disabled", "active"],
+        default: "disabled"
+    }),
+    __metadata("design:type", String)
+], User.prototype, "status", void 0);
+__decorate([
+    (0, typeorm_1.OneToOne)(() => Credential_1.Credential) //indica que es una relacion de 1 a 1 con la tabla de esa entidad
+    ,
+    (0, typeorm_1.JoinColumn)({ name: "credentialId" }) //JoinColumn define que lado de la relacion contiene la columna de union con una clave externa
+    //esta columna almacenara la clave foranea
+    ,
+    __metadata("design:type", Credential_1.Credential // columna credential
+    )
 ], User.prototype, "credential", void 0);
 __decorate([
-    (0, typeorm_1.ManyToMany)(() => Appointments_1.Appointment, (appointment) => appointment.user),
+    (0, typeorm_1.OneToMany)(() => Maps_1.Maps, (maps) => maps.user),
     __metadata("design:type", Array)
-], User.prototype, "appointments", void 0);
+], User.prototype, "maps", void 0);
 exports.User = User = __decorate([
     (0, typeorm_1.Entity)({
         name: "users" //nombre de mi tabla
