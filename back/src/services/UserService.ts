@@ -9,9 +9,6 @@ import ICredential from "../DTO/credentialdto";
 import mailjet from 'node-mailjet';
 import { v4 as uuidv4 } from 'uuid';
 
-console.log('MJ_APIKEY_PUBLIC:', process.env.MJ_APIKEY_PUBLIC);
-console.log('MJ_APIKEY_PRIVATE:', process.env.MJ_APIKEY_PRIVATE);
-
 // Claves de API de Mailjet
 const mailjetClient = new mailjet.Client({
   apiKey: process.env.MJ_APIKEY_PUBLIC, // Asegúrate de que estas claves estén en tus variables de entorno
