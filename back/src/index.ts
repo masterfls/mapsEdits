@@ -10,6 +10,7 @@ const PORT = process.env.PORT || 3002
 
 AppDataSource.initialize()
 .then(res => {
+    console.log("subiendo a heroku")
     console.log("conexion a la base de datos realizada con exito");
     app.listen(PORT,() => {
     console.log(`servidor escuchando en el puerto ${PORT}`)
