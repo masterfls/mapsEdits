@@ -1,4 +1,13 @@
 "use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -16,83 +25,83 @@ const mailjetClient = new node_mailjet_1.default.Client({
     apiSecret: process.env.MJ_APIKEY_PRIVATE
 });
 // Funciones de servicio
-const UserService = async () => {
-    const users = await data_source_1.UserModel.find();
+const UserService = () => __awaiter(void 0, void 0, void 0, function* () {
+    const users = yield data_source_1.UserModel.find();
     return users;
-};
+});
 exports.UserService = UserService;
-const returnUser = async (id) => {
-    const user = await data_source_1.UserModel.findOneBy({ id });
-    const credentials = await data_source_1.CredentialModel.findOneBy({ id });
-    const username = credentials?.username;
+const returnUser = (id) => __awaiter(void 0, void 0, void 0, function* () {
+    const user = yield data_source_1.UserModel.findOneBy({ id });
+    const credentials = yield data_source_1.CredentialModel.findOneBy({ id });
+    const username = credentials === null || credentials === void 0 ? void 0 : credentials.username;
     return { user, username };
-};
+});
 exports.returnUser = returnUser;
-const UserRole = async () => {
+const UserRole = () => __awaiter(void 0, void 0, void 0, function* () {
     const disabled = "disabled";
-    const users = await data_source_1.UserModel.find({ where: { rol: disabled } });
+    const users = yield data_source_1.UserModel.find({ where: { rol: disabled } });
     return users;
-};
+});
 exports.UserRole = UserRole;
-const userRole = async (id, rol) => {
-    const user = await data_source_1.UserModel.findOneBy({ id });
+const userRole = (id, rol) => __awaiter(void 0, void 0, void 0, function* () {
+    const user = yield data_source_1.UserModel.findOneBy({ id });
     if (user) {
         user.rol = rol;
-        await data_source_1.UserModel.save(user);
+        yield data_source_1.UserModel.save(user);
         return user;
     }
     else {
         console.log("no se encontró el usuario");
         return null;
     }
-};
+});
 exports.userRole = userRole;
-const userDelete = async (id) => {
-    const user = await data_source_1.UserModel.delete({ id });
-    await (0, CredentialService_1.credentialsDelete)(id);
+const userDelete = (id) => __awaiter(void 0, void 0, void 0, function* () {
+    const user = yield data_source_1.UserModel.delete({ id });
+    yield (0, CredentialService_1.credentialsDelete)(id);
     if (user.affected === 0) {
         console.log("no se encontró el usuario");
     }
     else {
         console.log("usuario eliminado");
     }
-};
+});
 exports.userDelete = userDelete;
-const validateUser = async (email, username) => {
-    const dataemail = await data_source_1.UserModel.findOneBy({ email });
-    const datausername = await data_source_1.CredentialModel.findOneBy({ username });
+const validateUser = (email, username) => __awaiter(void 0, void 0, void 0, function* () {
+    const dataemail = yield data_source_1.UserModel.findOneBy({ email });
+    const datausername = yield data_source_1.CredentialModel.findOneBy({ username });
     return !!(dataemail || datausername);
-};
-const createUser = async (userData) => {
+});
+const createUser = (userData) => __awaiter(void 0, void 0, void 0, function* () {
     const email = userData.email;
     const username = userData.username;
-    const validation = await validateUser(email, username);
+    const validation = yield validateUser(email, username);
     if (validation) {
         return null; // El usuario ya existe
     }
     else {
-        const newUser = await data_source_1.UserModel.create(userData);
-        const newCredential = await (0, CredentialService_1.createCredential)({
+        const newUser = yield data_source_1.UserModel.create(userData);
+        const newCredential = yield (0, CredentialService_1.createCredential)({
             username: userData.username,
             password: userData.password
         });
         newUser.credential = newCredential;
         newUser.confirmationToken = (0, uuid_1.v4)();
-        await data_source_1.UserModel.save(newUser);
+        yield data_source_1.UserModel.save(newUser);
         return newUser;
     }
-};
+});
 exports.createUser = createUser;
-const loginUser = async (Credentials) => {
-    const userExist = await (0, CredentialService_1.searchCredential)(Credentials);
+const loginUser = (Credentials) => __awaiter(void 0, void 0, void 0, function* () {
+    const userExist = yield (0, CredentialService_1.searchCredential)(Credentials);
     if (userExist) {
         console.log("token generado: ", userExist);
     }
-};
+});
 exports.loginUser = loginUser;
-const sendConfirmationEmail = async (to, subject, text) => {
+const sendConfirmationEmail = (to, subject, text) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const request = await mailjetClient.post('send', { version: 'v3.1' }).request({
+        const request = yield mailjetClient.post('send', { version: 'v3.1' }).request({
             Messages: [
                 {
                     From: {
@@ -115,16 +124,16 @@ const sendConfirmationEmail = async (to, subject, text) => {
     catch (err) {
         console.error(err);
     }
-};
+});
 exports.sendConfirmationEmail = sendConfirmationEmail;
-const confirmEmail = async (token) => {
-    const user = await data_source_1.UserModel.findOne({ where: { confirmationToken: token } });
+const confirmEmail = (token) => __awaiter(void 0, void 0, void 0, function* () {
+    const user = yield data_source_1.UserModel.findOne({ where: { confirmationToken: token } });
     if (!user) {
         throw new Error('Invalid or expired token');
     }
     user.status = 'active';
     user.confirmationToken = null;
-    await data_source_1.UserModel.save(user);
+    yield data_source_1.UserModel.save(user);
     return user;
-};
+});
 exports.confirmEmail = confirmEmail;
