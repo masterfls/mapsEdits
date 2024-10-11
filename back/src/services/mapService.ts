@@ -1,4 +1,3 @@
-import { Request, Response } from "express";
 import { Maps } from "../entities/Maps";
 import IMaps from "../DTO/mapsdto";
 import { MapsModel, UserModel } from "../config/data-source";

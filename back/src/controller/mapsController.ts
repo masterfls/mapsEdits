@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { deleteLinea, polylineGet, savePolyline } from "../services/mapService";
 import { Maps } from "../entities/Maps";
 
-export const getPolyline = async(req: any, res: any) =>{ 
+export const getPolyline = async(req: Request, res: Response) =>{ 
     try {
         const linea = req.body;
         const savelinea = await savePolyline(linea);
