@@ -19,6 +19,7 @@ export const rolcontroller = async(req: Request, res: Response) => {
         const {id, role} = req.body
         const user = await userRole(id, role)
         console.log("Usuario modificado")
+        res.status(200).json({ message: "Rol de usuario modificado" });
     } catch (error) {
         console.error({error: "error al modificar rol del usuario"})
     }
@@ -29,6 +30,7 @@ export const deleteUser = async(req: Request, res: Response) => {
         const id = req.query.id
         const user = await userDelete(Number(id))
         console.log("usuario eliminado de la base de datos")
+        res.status(200).json({ message: "User Delete" });
     } catch (error) {
         console.error({error: "error al eliminar usuario de la base de datos"})
     }
@@ -61,7 +63,7 @@ export const register = async (req: Request, res: Response) => {
         const newUser: User | null = await createUser({ name, email, birthdate, nDni, username, password });
         
         if (newUser == null) {
-            res.status(200).json(true); // Indica que el registro fue exitoso pero no se creó un nuevo usuario.
+            return res.status(400).json({ message: "Registro fallido" });
         } else {
             // Genera el enlace de confirmación
             const confirmationLink = `https://ievg.online/users/confirmation?token=${newUser.confirmationToken}`;
@@ -72,9 +74,10 @@ export const register = async (req: Request, res: Response) => {
             console.log('User registered. Please check your email to confirm your account.');
             res.status(200).json(false); // Indica que el usuario fue creado exitosamente.
         }
-    } catch (error: any) {
-        console.log('Error registering user');
-        res.status(400).json({ error: error.message });
+    } catch (error) {
+    
+        console.error(error);
+        res.status(400).json({ error: "Error al obtener los usuarios" });
     }
 }
 

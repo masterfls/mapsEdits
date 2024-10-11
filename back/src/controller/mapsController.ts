@@ -17,6 +17,9 @@ export const getPolyline = async(req: Request, res: Response) =>{
 export const deletePolyline = async(req: Request, res: Response) =>{ 
     try {
         const id = req.query.id;
+        if (!id) {
+            return res.status(400).json({ error: "ID no proporcionado" });
+        }
         await deleteLinea(Number(id));
         //  res.status(201).json("aqui se mostrara datos geoespaciales de las polilineas");
         
