@@ -195,7 +195,8 @@
     "heroku-postbuild": "npm install --prefix front && npm run build --prefix front"
   },
   "engines": {
-    "node": "14.x"
+    "node": "20.x",
+    "npm": "10.x"
   },
   "keywords": [],
   "author": "",
