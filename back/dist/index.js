@@ -13,6 +13,7 @@ const data_source_1 = require("./config/data-source");
 const PORT = process.env.PORT || 3002;
 data_source_1.AppDataSource.initialize()
     .then(res => {
+    console.log("subiendo a heroku");
     console.log("conexion a la base de datos realizada con exito");
     server_1.default.listen(PORT, () => {
         console.log(`servidor escuchando en el puerto ${PORT}`);
