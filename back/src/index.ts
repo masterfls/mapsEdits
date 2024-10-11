@@ -2,12 +2,11 @@ import dotenv from 'dotenv'; // Importar dotenv
 dotenv.config(); // Cargar el archivo .env
 import "reflect-metadata";
 import app from "./server";
-import {PORT} from "./config/envs";
+// import {PORT} from "./config/envs";
 import { AppDataSource } from "./config/data-source";
 
 // Cargar las variables de entorno desde .env
-console.log("MJ_APIKEY_PUBLIC:", process.env.MJ_APIKEY_PUBLIC);  // Debe mostrar tu API Key
-console.log("MJ_APIKEY_PRIVATE:", process.env.MJ_APIKEY_PRIVATE);  // Debe mostrar tu API Secret
+const PORT = process.env.PORT || 3002
 
 AppDataSource.initialize()
 .then(res => {

@@ -19,6 +19,8 @@ const data_source_1 = require("../config/data-source");
 const CredentialService_1 = require("./CredentialService");
 const node_mailjet_1 = __importDefault(require("node-mailjet"));
 const uuid_1 = require("uuid");
+console.log('MJ_APIKEY_PUBLIC:', process.env.MJ_APIKEY_PUBLIC);
+console.log('MJ_APIKEY_PRIVATE:', process.env.MJ_APIKEY_PRIVATE);
 // Claves de API de Mailjet
 const mailjetClient = new node_mailjet_1.default.Client({
     apiKey: process.env.MJ_APIKEY_PUBLIC, // Asegúrate de que estas claves estén en tus variables de entorno

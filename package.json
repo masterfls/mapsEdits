@@ -192,7 +192,7 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon",
+    "start": "node app",
     "dev": "nodemon src/index.ts",
     "build": "tsc"
   },
