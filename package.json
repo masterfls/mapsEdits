@@ -192,7 +192,8 @@
   },
   "scripts": {
     "start": "npm install --prefix back && npm run build --prefix back && npm start --prefix back",
-    "heroku-postbuild": "npm install --prefix front && npm run build --prefix front"
+    "heroku-postbuild": "npm install --prefix front && npm run build --prefix front",
+    "check-express": "node checkExpress.js"
   },
   "engines": {
     "node": "20.x",
