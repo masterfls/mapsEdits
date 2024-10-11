@@ -45,7 +45,8 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "live-server --open=pages/login.html"
+    "start": "live-server --open=pages/login.html",
+    "build": "echo 'No build step needed' && mkdir -p ../back/dist/public && cp -r ./* ../back/dist/public"
   },
   "keywords": [],
   "author": "",

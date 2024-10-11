@@ -191,10 +191,8 @@
     "webpack-cli": "^5.1.4"
   },
   "scripts": {
-    "postinstall": "npm install --prefix front && npm install --prefix back",
-    "build": "npm run build --prefix front && npm run build --prefix back",
-    "start": "npm run start --prefix back",
-    "dev": "npm run dev --prefix back"
+    "start": "npm install --prefix back && npm run build --prefix back && npm start --prefix back",
+    "heroku-postbuild": "npm install --prefix front && npm run build --prefix front"
   },
   "engines": {
     "node": "14.x"

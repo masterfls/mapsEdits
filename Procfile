@@ -1,2 +1,1 @@
-web: npm start --prefix back
-
+web: npm start
