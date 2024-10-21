@@ -1,0 +1,94 @@
+/* Contenedor principal */
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #f4f4f4;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Cabecera de la tabla de usuarios */
+.header {
+    display: flex;
+    font-weight: bold;
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px;
+    border-radius: 8px 8px 0 0;
+}
+
+/* Fila de encabezado */
+.header-item {
+    flex: 1;
+    text-align: center;
+    font-size: 16px;
+}
+
+/* Filas de usuarios */
+.user-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+/* Celdas de usuario */
+.user-cell {
+    flex: 1;
+    padding: 5px;
+    font-size: 16px; /* Aumentar tamaño de fuente en 2 px */
+    color: #333;
+    text-align: center;
+}
+
+/* Estilo para el nombre del usuario */
+.user-cell:first-child {
+    font-weight: bold;
+}
+
+/* Estado del usuario: activo */
+.active {
+    color: #28a745;
+    font-weight: bold;
+}
+
+/* Estado del usuario: deshabilitado */
+.disabled {
+    color: #dc3545;
+    font-weight: bold;
+}
+
+/* Rol del usuario: admin */
+.admin {
+    color: #007bff;
+    font-weight: bold;
+}
+
+/* Rol del usuario: user */
+.user {
+    color: #6c757d;
+}
+
+/* Asegura que el contenedor no se desborde */
+.user-row > .user-cell {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Responsivo para pantallas más pequeñas */
+@media (max-width: 600px) {
+    .user-row {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .user-cell {
+        flex: unset;
+        width: 100%;
+    }
+}

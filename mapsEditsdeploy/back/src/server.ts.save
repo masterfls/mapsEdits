@@ -1,0 +1,50 @@
+import express  from "express";    //me traigo la libreria express que me servira para crear mi servidor
+import path from 'path';
+import cors from "cors";
+import morgan from "morgan";
+import router from "./router/index"
+import fs from 'fs';
+import https from 'https';
+
+const app = express();          //creo mi servidor en la constante app
+
+
+app.use(morgan("dev"));
+app.use(express.json());
+app.use(cors({
+    origin: 'https://www.ievg.online', // Permitir solicitudes desde el dominio de tu frontend
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+}));
+
+// Sirve archivos estáticos desde la carpeta "mapsEdits"
+app.use(express.static(path.join(__dirname, '../mapsEdits')));
+
+// Redirige la ruta raíz (/) al archivo HTML de inicio
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, '../mapsEdits', 'index.html'));
+});
+
+
+app.use(router)         //tengo el servidor, el enrutador, se hace la peticion y en esta linea lego hacia donde ira la solicitud, en este caso al anrutador
+
+// Configuración de HTTPS
+const privateKey = fs.readFileSync('/path/to/your/private/key.pem', 'utf8');
+const certificate = fs.readFileSync('/path/to/your/certificate.pem', 'utf8');
+const ca = fs.readFileSync('/path/to/your/ca_bundle.pem', 'utf8');
+
+const credentials = {
+    key: privateKey,
+    cert: certificate,
+    ca: ca
+};
+
+// Crear el servidor HTTPS
+const httpsServer = https.createServer(credentials, app);
+
+// Iniciar el servidor HTTPS
+httpsServer.listen(443, () => {
+    console.log('HTTPS Server running on port 443');
+});
+
+export default app;

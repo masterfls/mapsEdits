@@ -1,0 +1,103 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.barra {
+  background-color: #343a40; /* Color de fondo */
+  padding: 10px;
+  color: white;
+  position: fixed; /* Mantener el menú fijo en la pantalla */
+  top: 0;
+  left: 0;
+  height: 100%; /* Ocupa toda la altura de la ventana */
+  width: 200px; /* Ajusta el ancho según tus necesidades */
+  display: flex;
+  flex-direction: column; /* Coloca los elementos en columna */
+}
+
+.logos {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; /* Alinea a la izquierda */
+  margin-bottom: 20px; /* Espacio entre el logo y el menú */
+}
+
+.btn-menu {
+  margin-right: 15px; /* Espacio entre el botón y otros elementos */
+}
+
+.nav {
+  display: flex;
+  flex-direction: column; /* Coloca los elementos en columna */
+  width: 100%; /* Para que ocupe todo el ancho de la barra */
+}
+
+.nav-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.nav-list li {
+  margin: 10px 0;
+}
+
+.nav-list a {
+  color: white;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  transition: background 0.3s;
+}
+
+.nav-list a:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.nav-list i {
+  margin-right: 8px; /* Espacio entre icono y texto */
+}
+
+#map {
+  margin-left: 200px; /* Espacio para la barra */
+  height: 100vh; /* Ajusta la altura del mapa */
+  width: calc(100% - 200px); /* Resta el ancho de la barra */
+}
+
+/* Estilos para pantallas pequeñas */
+@media (max-width: 768px) {
+  .barra {
+      position: relative; /* Cambia la posición a relativa */
+      height: auto; /* Deja que el alto sea automático */
+      width: 100%; /* Ocupar todo el ancho */
+      flex-direction: row; /* Alinear en fila */
+      justify-content: space-between; /* Espacio entre elementos */
+      padding: 5px; /* Reduce el padding */
+      margin-top: 10px; /* Espacio superior para separarse del mapa */
+  }
+
+  #map {
+      margin-left: 0; /* Elimina el margen izquierdo */
+      height: calc(100vh - 60px); /* Ajusta la altura del mapa para que no ocupe toda la pantalla */
+      width: 100%; /* Ocupar todo el ancho */
+  }
+
+  .nav {
+      flex-direction: row; /* Alinear elementos en fila */
+      justify-content: center; /* Centrar elementos */
+      flex-wrap: wrap; /* Permitir que los elementos se ajusten */
+      width: 100%; /* Ocupar todo el ancho */
+  }
+
+  .nav-list li {
+      margin: 0 10px; /* Espacio horizontal entre los elementos */
+  }
+
+  .nav-list {
+      display: flex; /* Cambiar a display flex */
+      justify-content: space-between; /* Espacio entre elementos */
+      width: 100%; /* Ocupa todo el ancho */
+  }
+}

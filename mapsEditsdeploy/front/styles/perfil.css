@@ -1,0 +1,95 @@
+/* General styles for the container */
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #e9ecef;
+    padding: 20px;
+}
+
+/* Styles for the profile card */
+.profile-card {
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 100%;
+    max-width: 500px;
+    margin: 20px;
+    text-align: center;
+}
+
+/* Styles for the title */
+#title {
+    font-size: 28px;
+    font-weight: 600;
+    color: #007bff;
+    margin-bottom: 20px;
+}
+
+/* Styles for profile info section */
+.profile-info {
+    margin-bottom: 20px;
+}
+
+.profile-info p {
+    font-size: 18px;
+    color: #495057;
+    margin-bottom: 15px;
+}
+
+.profile-info strong {
+    color: #343a40;
+}
+
+/* Styles for profile info data */
+#full-name,
+#email,
+#birthdate,
+#username,
+#nDni {
+    font-size: 18px;
+    color: #212529;
+    display: block;
+    margin-top: 5px;
+}
+
+/* Styles for the back button */
+#back-button {
+    display: inline-block;
+    padding: 12px 24px;
+    font-size: 18px;
+    font-weight: 500;
+    color: #ffffff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+#back-button:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+
+/* Responsive design for mobile devices */
+@media (max-width: 768px) {
+    .profile-card {
+        padding: 15px;
+    }
+
+    #title {
+        font-size: 24px;
+    }
+
+    .profile-info p {
+        font-size: 16px;
+    }
+
+    #back-button {
+        font-size: 16px;
+        padding: 10px 20px;
+    }
+}
