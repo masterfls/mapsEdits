@@ -1,70 +1,66 @@
 body {
-    display: flex;
-    justify-content: center;
-    /* align-items: center; */
-    height: 100vh;
-    margin: 0;
     font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
-    
-}
-
-.container{
-    display: flex;
-    flex-direction: column;
-    width: 80%;
-    height: auto;
-    max-width: 1200px;
-}
-.mensaje{
-    font-size: 1.5em;
-    color: #ff6f61;
-    text-align: center;
-    padding: 20px;
-    margin: 20px auto;
-    background-color: #FCE4EC;
-    border-radius: 5px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-}
-.card {
-    display: flex;
-    height: 100px;
-    border: 1px solid #ccc;
-    background-color: #fff;
-    margin: 20px 0;
-    border-radius: 10px;
-}
-
-
-.section {
-    flex: 1;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    border-right: 1px solid #ccc;
-}
-
-.section:last-child {
-    border-right: none;
-}
-
-.title {
-    font-size: 24px;
     margin: 0;
+    padding: 0;
 }
 
-.button {
-    width: 100px;
-    height: 70px;
-    font-size: 17px;
-    cursor: pointer;
-    background-color: #007BFF;
-    color: #fff;
+.barra {
+    background-color: #343a40; /* Color de fondo */
+    padding: 10px;
+    color: white;
+    position: relative; /* Asegúrate de que el nav se posicione correctamente */
+}
+
+.logos {
+    display: flex;
+    align-items: center;
+}
+
+.btn-menu {
+    background: none;
     border: none;
-    border-radius: 10px;
-    transition: background-color 0.3s;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    margin-right: 15px;
 }
 
-.button:hover {
-    background-color: #0056b3;
+.nav {
+    display: block; /* Cambiado a block */
+    background-color: #343a40; /* Igual que la barra */
+    width: 100%; /* Para que tenga el mismo ancho que la barra */
+    padding: 10px 0; /* Espaciado interno */
 }
+
+.nav-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.nav-list li {
+    margin: 10px 0;
+}
+
+.nav-list a {
+    color: white;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    transition: background 0.3s;
+}
+
+.nav-list a:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.nav-list i {
+    margin-right: 8px; /* Espacio entre icono y texto */
+}
+
+#map {
+    display: flex;
+    height: 100vh;
+    width: 95vw;
+    margin-left: 5%;
+  }

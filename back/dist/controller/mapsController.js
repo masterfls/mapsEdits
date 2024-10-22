@@ -26,9 +26,6 @@ exports.getPolyline = getPolyline;
 const deletePolyline = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const id = req.query.id;
-        if (!id) {
-            return res.status(400).json({ error: "ID no proporcionado" });
-        }
         yield (0, mapService_1.deleteLinea)(Number(id));
         //  res.status(201).json("aqui se mostrara datos geoespaciales de las polilineas");
     }

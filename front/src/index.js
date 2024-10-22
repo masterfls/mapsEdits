@@ -49,7 +49,7 @@ function initMap() {
             if (!token) {
                 throw new Error("token not found");
             }
-            const envio = await axios.get('https://ievg.online/users/validate/token', {
+            const envio = await axios.get('https://www.ievg.online/users/validate/token', {
                 headers: {
                     'Authorization': `Bearer ${token}` // Envía el token en el encabezado Authorization
                 }
@@ -72,7 +72,7 @@ function initMap() {
         const id = await fetchProtectedData();
 
         console.log("el id del usuario es: ", id);
-        const data = await axios.get("https://ievg.online/users/id", { params: { id: id } });
+        const data = await axios.get("https://www.ievg.online/users/id", { params: { id: id } });
         if (data.data.user.rol === "user" || data.data.user.rol === "admin") {
 
             const grosorItems = document.querySelectorAll('#grosor-menu li a');
@@ -191,7 +191,7 @@ function initMap() {
                     linea.userId = id;
                     console.log(`el usuario actual tiene id ${id}`);
 
-                    const response = await axios.post('https://ievg.online/api/lineas/post', linea, {
+                    const response = await axios.post('https://www.ievg.online/api/lineas/post', linea, {
                         headers: {
                             'Authorization': `Bearer ${token}` // Envía el token en el encabezado Authorization
                         }
@@ -202,7 +202,7 @@ function initMap() {
             }
             async function deleteLinea(id){
                 try {
-                    await axios.delete('https://ievg.online/api/lineas/delete', {params: {id: id}})
+                    await axios.delete('https://www.ievg.online/api/lineas/delete', {params: {id: id}})
                     console.log(`se eliminara la linea que pertenezca al id: ${id}`)
                     return 
                 } catch (error) {
@@ -215,7 +215,7 @@ function initMap() {
                 let index = 0;
                 try {
                     const id = await fetchProtectedData();
-                    const response = await axios.get('https://ievg.online/api/lineas/get', { params: { id: id } });
+                    const response = await axios.get('https://www.ievg.online/api/lineas/get', { params: { id: id } });
                     const savedPolylines = response.data;
                     savedPolylines.forEach((line) => {
                         const coordenadas = line.coordenadas;
@@ -236,7 +236,7 @@ function initMap() {
                         google.maps.event.addListener(nuevaLinea, 'click', function () {
                             nuevaLinea.setMap(null); // Esto eliminará la línea del mapa
                             deleteLinea(nuevaLinea.id)
-                            console.log("Línea borrada.");                        
+                            console.log("Línea borrada.");
                         });
                     });
                 } catch (error) {

@@ -27,7 +27,6 @@ const rolcontroller = (req, res) => __awaiter(void 0, void 0, void 0, function* 
         const { id, role } = req.body;
         const user = yield (0, UserService_1.userRole)(id, role);
         console.log("Usuario modificado");
-        res.status(200).json({ message: "Rol de usuario modificado" });
     }
     catch (error) {
         console.error({ error: "error al modificar rol del usuario" });
@@ -39,7 +38,6 @@ const deleteUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         const id = req.query.id;
         const user = yield (0, UserService_1.userDelete)(Number(id));
         console.log("usuario eliminado de la base de datos");
-        res.status(200).json({ message: "User Delete" });
     }
     catch (error) {
         console.error({ error: "error al eliminar usuario de la base de datos" });
@@ -72,22 +70,18 @@ const register = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         const { name, email, birthdate, nDni, username, password } = req.body;
         const newUser = yield (0, UserService_1.createUser)({ name, email, birthdate, nDni, username, password });
         if (newUser == null) {
-            return res.status(400).json({ message: "Registro fallido" });
+            res.status(200).json(true);
         }
         else {
-            // Genera el enlace de confirmación
-            const confirmationLink = `https://ievg.online/users/confirmation?token=${newUser.confirmationToken}`;
-            // Crea el texto del mensaje
-            const text = `Por favor, confirma tu cuenta haciendo clic en el siguiente enlace: ${confirmationLink}`;
-            // Envía el correo de confirmación
-            yield (0, UserService_1.sendConfirmationEmail)(newUser.email, "Confirma tu cuenta", text);
+            const confirmationLink = `http://www.ievg.online/users/confirmation?token=${newUser.confirmationToken}`;
+            yield (0, UserService_1.sendConfirmationEmail)(newUser.email, confirmationLink);
             console.log('User registered. Please check your email to confirm your account.');
-            res.status(200).json(false); // Indica que el usuario fue creado exitosamente.
+            res.status(200).json(false);
         }
     }
     catch (error) {
-        console.error(error);
-        res.status(400).json({ error: "Error al obtener los usuarios" });
+        console.log('Error registering user');
+        res.status(400).json({ error: error.message });
     }
 });
 exports.register = register;

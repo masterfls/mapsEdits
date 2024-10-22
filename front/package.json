@@ -6,7 +6,7 @@
   "type": "module",
   "dependencies": {
     "anymatch": "^3.1.3",
-    "axios": "^1.7.2",
+    "axios": "^1.7.7",
     "balanced-match": "^1.0.2",
     "binary-extensions": "^2.3.0",
     "brace-expansion": "^1.1.11",
@@ -25,6 +25,7 @@
     "is-number": "^7.0.0",
     "minimatch": "^3.1.2",
     "ms": "^2.1.2",
+    "mysql": "^2.18.1",
     "nodemon": "^3.1.4",
     "normalize-path": "^3.0.0",
     "picomatch": "^2.3.1",
@@ -45,12 +46,7 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "live-server --open=pages/login.html",
-    "build": "echo 'No build step needed' && mkdir -p ../back/dist/public && cp -r ./* ../back/dist/public"
-  },
-  "engines": {
-    "node": "20.x",
-    "npm": "10.x"
+    "start": "live-server --open=pages/login.html"
   },
   "keywords": [],
   "author": "",

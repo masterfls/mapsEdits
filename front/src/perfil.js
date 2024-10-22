@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
     async function fetchProtectedData(){
         try{
             const token = sessionStorage.getItem('token'); //obtengo y guardo el token
-            const envio = await axios.get('https://ievg.online/users/validate/token', {
+            const envio = await axios.get('https://www.ievg.online/users/validate/token', {
                 headers: {
                     'Authorization': `Bearer ${token}`  // Envía el token en el encabezado Authorization
                 }
@@ -24,9 +24,19 @@ document.addEventListener("DOMContentLoaded", () => {
         try{
             const token = sessionStorage.getItem('token'); //obtengo y guardo el token
             const id = await fetchProtectedData();
-            const data = await axios.get('https://ievg.online/users/id', {params: {id: id.id}})
+            const data = await axios.get('https://www.ievg.online/users/id', {params: {id: id.id}})
 
-            //completo los campos con la informacion obtenida desde el servidor
+	    console.log("el id es:",id)
+            console.log("data:",data)
+	    //obtengo los elementos del DOM
+	    const name = document.getElementById("full-name");
+            const mail = document.getElementById("email")
+            const birthdate = document.getElementById("birthdate");
+            const username = document.getElementById("username")
+            const dni = document.getElementById("nDni")
+            const h2 = document.getElementById("title")
+
+	    //completo los campos con la informacion obtenida desde el servidor
             const date = new Date(data.data.user.birthdate)
             name.innerHTML = data.data.user.name
             mail.innerHTML = data.data.user.email
@@ -40,11 +50,4 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
     const data = response()
-
-    const name = document.getElementById("full-name");
-    const mail = document.getElementById("email")
-    const birthdate = document.getElementById("birthdate");
-    const username = document.getElementById("username")
-    const dni = document.getElementById("nDni")
-    const h2 = document.getElementById("title")
 })

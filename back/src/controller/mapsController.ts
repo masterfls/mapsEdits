@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { deleteLinea, polylineGet, savePolyline } from "../services/mapService";
 import { Maps } from "../entities/Maps";
 
-export const getPolyline = async(req: Request, res: Response) =>{ 
+export const getPolyline = async(req: any, res: any) =>{ 
     try {
         const linea = req.body;
         const savelinea = await savePolyline(linea);
@@ -17,9 +17,6 @@ export const getPolyline = async(req: Request, res: Response) =>{
 export const deletePolyline = async(req: Request, res: Response) =>{ 
     try {
         const id = req.query.id;
-        if (!id) {
-            return res.status(400).json({ error: "ID no proporcionado" });
-        }
         await deleteLinea(Number(id));
         //  res.status(201).json("aqui se mostrara datos geoespaciales de las polilineas");
         

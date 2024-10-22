@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', function() {
     async function fetchProtectedData(){
         try{
             const token = sessionStorage.getItem('token'); //obtengo y guardo el token
-            const envio = await axios.get('https://ievg.online/users/validate/token', {
+            const envio = await axios.get('https://www.ievg.online/users/validate/token', {
                 headers: {
                     'Authorization': `Bearer ${token}`  // Envía el token en el encabezado Authorization
                 }
@@ -13,15 +13,15 @@ document.addEventListener('DOMContentLoaded', function() {
             console.error("error fetching protected data: ", error)
         }
     }
-    
+
     const response = async () => {
         const container = document.getElementById('user-container');
         const id = await fetchProtectedData()
-        const usuario = await axios.get("https://ievg.online/users/id", {params: {id: id.id}})
+        const usuario = await axios.get("https://www.ievg.online/users/id", {params: {id: id.id}})
         const rol = usuario.data.user.rol
 
         if(rol !== 'admin') return window.location.href = 'home.html'
-        const data = await axios.get("https://ievg.online/users/get")
+        const data = await axios.get("https://www.ievg.online/users/get")
         const users = data.data
 
         users.forEach((user, index) => {
@@ -70,6 +70,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
         });
     };
-            
+
     response()
 });
